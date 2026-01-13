@@ -1,11 +1,15 @@
+import { defineNuxtConfig } from 'nuxt/config'
+
 export default defineNuxtConfig({
-  modules: ['@nuxt/content', '@nuxtjs/tailwindcss', '@nuxt/eslint', 'shadcn-nuxt'],
+  modules: ['@nuxt/content', '@nuxt/eslint'],
   css: ['~/assets/css/tailwind.css'],
-  shadcn: {
-    prefix: '',
-    componentDir: './components/ui'
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
   },
   content: {
-    documentDriven: true
-  }
+    documentDriven: true,
+  },
 })
