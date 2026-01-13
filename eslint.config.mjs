@@ -1,4 +1,4 @@
-import { createConfigForNuxt } from '@nuxt/eslint-config/flat'
-import prettier from 'eslint-config-prettier'
+import { createConfigForNuxt } from '@nuxt/eslint-config'
+import prettierConfig from 'eslint-config-prettier/flat'
 
-export default createConfigForNuxt({}, prettier)
+export default createConfigForNuxt({}).append(prettierConfig)
