@@ -1,12 +1,5 @@
 <script setup lang="ts">
-const formatDate = (value?: string) =>
-  value
-    ? new Intl.DateTimeFormat('ja-JP', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      }).format(new Date(value))
-    : ''
+import { formatDate } from '~/utils/formatDate'
 </script>
 
 <template>
