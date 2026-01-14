@@ -11,5 +11,8 @@ export default defineNuxtConfig({
   },
   content: {
     documentDriven: true,
+    highlight: {
+      theme: 'github-dark',
+    },
   },
 })

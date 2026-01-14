@@ -36,6 +36,41 @@ console.log('testing code block')
 console.log('testing code block')
 ```
 
+
+これで **TypeScript としてハイライト**されます。
+
+---
+
+## 対応言語
+
+Shiki 対応言語はほぼ全部使えます。
+
+例：
+- `js`, `ts`, `vue`
+- `python`, `sql`, `bash`
+- `json`, `yaml`
+- `html`, `css` など
+
+---
+
+## テーマ設定（重要）
+
+`nuxt.config.ts` で指定します。
+
+```ts
+export default defineNuxtConfig({
+  content: {
+    highlight: {
+      theme: 'github-dark' // or 'nord', 'dracula', 'light-plus', etc.
+    }
+  }
+})
+```
+
+
+→ 1行目、3–4行目が強調されます。
+
+
 ## ちょっとした説明文
 
 Nuxt Content は、ブログやドキュメント、ポートフォリオのような
