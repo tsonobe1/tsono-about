@@ -29,7 +29,7 @@ const collectionKey = computed<keyof Collections | null>(() => {
 })
 
 const contentDocKey = computed(
-  () => `content-doc:${collectionKey.value ?? 'none'}:${currentPath.value}`
+  () => `content-doc:${collectionKey.value ?? 'none'}:${currentPath.value}`,
 )
 
 const { data: doc } = await useAsyncData(
@@ -41,7 +41,7 @@ const { data: doc } = await useAsyncData(
     }
     return queryCollection(key).where('path', '=', currentPath.value).first()
   },
-  { watch: [currentPath, collectionKey] }
+  { watch: [currentPath, collectionKey] },
 )
 
 const backLink = computed(() => {
@@ -92,6 +92,8 @@ const formattedDate = computed(() => {
       </div>
     </article>
 
-    <p v-else class="muted text-center text-sm">コンテンツが見つかりませんでした。</p>
+    <p v-else class="muted text-center text-sm">
+      コンテンツが見つかりませんでした。
+    </p>
   </div>
 </template>

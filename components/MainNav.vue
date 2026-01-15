@@ -17,7 +17,9 @@ const isActive = (to: string) => {
 </script>
 
 <template>
-  <nav class="mt-4 mb-6 flex flex-wrap items-center justify-center gap-8 text-sm tracking-wide">
+  <nav
+    class="mt-4 mb-6 flex flex-wrap items-center justify-center gap-8 text-sm tracking-wide"
+  >
     <NuxtLink
       v-for="item in NAV_LINKS"
       :key="item.key"
@@ -26,7 +28,7 @@ const isActive = (to: string) => {
         'inline-flex min-w-[80px] items-center justify-center px-2 py-1 transition hover:text-[var(--accent)]',
         isActive(item.to)
           ? 'text-base font-semibold text-[var(--accent)]'
-          : 'text-[var(--text)]'
+          : 'text-[var(--text)]',
       ]"
       :aria-current="isActive(item.to) ? 'page' : undefined"
     >

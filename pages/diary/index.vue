@@ -8,7 +8,7 @@ const { data } = await useAsyncData('diary-page', () =>
   queryCollection('diary')
     .select('path', 'title', 'date', 'category', 'description')
     .order('date', 'DESC')
-    .all()
+    .all(),
 )
 
 const entries = computed(() => data.value ?? [])
@@ -36,7 +36,9 @@ const entries = computed(() => data.value ?? [])
               {{ entry.date ? formatDate(entry.date) : '----/--/--' }}
             </span>
           </div>
-          <h2 class="text-xl font-semibold text-[var(--text)] transition group-hover:text-[var(--accent)]">
+          <h2
+            class="text-xl font-semibold text-[var(--text)] transition group-hover:text-[var(--accent)]"
+          >
             {{ entry.title }}
           </h2>
         </div>

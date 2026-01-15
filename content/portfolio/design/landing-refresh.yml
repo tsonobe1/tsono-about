@@ -1,7 +1,7 @@
-title: "Landing Page Refresh"
-type: "design"
+title: 'Landing Page Refresh'
+type: 'design'
 year: 2023
-url: "https://dribbble.com/shots/12345678-landing-refresh"
-description: "SaaS ランディングのタイポグラフィと配色を刷新。Nuxt でコンポーネント化して A/B テスト。"
+url: 'https://dribbble.com/shots/12345678-landing-refresh'
+description: 'SaaS ランディングのタイポグラフィと配色を刷新。Nuxt でコンポーネント化して A/B テスト。'
 order: 5
-cover: "/images/portfolio/design/landing-refresh.png"
+cover: '/images/portfolio/design/landing-refresh.png'

@@ -25,14 +25,8 @@
     color: var(--text);
     line-height: 1.65;
     font-family:
-      -apple-system,
-      BlinkMacSystemFont,
-      'SF Pro Display',
-      'SF Pro Text',
-      'Hiragino Sans',
-      'Hiragino Kaku Gothic ProN',
-      'Helvetica Neue',
-      Arial,
+      -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+      'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Helvetica Neue', Arial,
       sans-serif;
   }
 

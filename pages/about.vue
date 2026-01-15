@@ -2,7 +2,7 @@
 import { formatDate } from '~/utils/formatDate'
 
 const { data: doc } = await useAsyncData('about-doc', () =>
-  queryCollection('career').where('path', '=', '/career/index').first()
+  queryCollection('career').where('path', '=', '/career/index').first(),
 )
 </script>
 
@@ -12,7 +12,9 @@ const { data: doc } = await useAsyncData('about-doc', () =>
 
     <article v-if="doc" class="flex flex-col gap-6">
       <div class="space-y-2">
-        <h2 class="text-3xl font-semibold text-[var(--text)]">{{ doc.title }}</h2>
+        <h2 class="text-3xl font-semibold text-[var(--text)]">
+          {{ doc.title }}
+        </h2>
         <p v-if="doc.updatedAt" class="muted text-sm">
           最終更新: {{ formatDate(doc.updatedAt) }}
         </p>
@@ -23,6 +25,8 @@ const { data: doc } = await useAsyncData('about-doc', () =>
       </div>
     </article>
 
-    <p v-else class="muted text-center text-sm">コンテンツが見つかりませんでした。</p>
+    <p v-else class="muted text-center text-sm">
+      コンテンツが見つかりませんでした。
+    </p>
   </div>
 </template>

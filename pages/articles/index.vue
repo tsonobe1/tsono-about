@@ -8,7 +8,7 @@ const { data } = await useAsyncData('articles-page', () =>
   queryCollection('article')
     .select('path', 'title', 'date', 'summary', 'description', 'kind', 'tags')
     .order('date', 'DESC')
-    .all()
+    .all(),
 )
 
 const articles = computed(() => data.value ?? [])
@@ -26,15 +26,22 @@ const articles = computed(() => data.value ?? [])
       >
         <div class="flex flex-col gap-2">
           <div class="flex items-center gap-2 text-xs tracking-widest">
-            <span class="rounded border border-white/10 px-2 py-0.5 text-[var(--accent)]">
+            <span
+              class="rounded border border-white/10 px-2 py-0.5 text-[var(--accent)]"
+            >
               {{ article.kind }}
             </span>
-            <span class="muted" v-if="article.date">{{ formatDate(article.date) }}</span>
+            <span class="muted" v-if="article.date">{{
+              formatDate(article.date)
+            }}</span>
           </div>
           <h2 class="text-xl font-semibold text-[var(--text)]">
             {{ article.title }}
           </h2>
-          <div class="flex flex-wrap gap-2 text-xs text-[var(--accent)]" v-if="article.tags?.length">
+          <div
+            class="flex flex-wrap gap-2 text-xs text-[var(--accent)]"
+            v-if="article.tags?.length"
+          >
             <span v-for="tag in article.tags" :key="tag">#{{ tag }}</span>
           </div>
         </div>

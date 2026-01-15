@@ -1,11 +1,11 @@
-title: "Habit Streak"
-type: "app"
+title: 'Habit Streak'
+type: 'app'
 year: 2025
-url: "https://habit-streak.example.com"
-description: "PWA ベースの習慣トラッカー。ドラッグで並べ替えできる UI を VueUse で実装。"
+url: 'https://habit-streak.example.com'
+description: 'PWA ベースの習慣トラッカー。ドラッグで並べ替えできる UI を VueUse で実装。'
 featured: true
 order: 20
-cover: "/images/portfolio/habit-streak/cover.png"
+cover: '/images/portfolio/habit-streak/cover.png'
 gallery:
-  - "/images/portfolio/habit-streak/dashboard.png"
-  - "/images/portfolio/habit-streak/detail.png"
+  - '/images/portfolio/habit-streak/dashboard.png'
+  - '/images/portfolio/habit-streak/detail.png'
