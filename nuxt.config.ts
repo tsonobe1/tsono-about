@@ -10,9 +10,12 @@ export default defineNuxtConfig({
     },
   },
   content: {
-    documentDriven: true,
-    highlight: {
-      theme: 'github-dark',
+    build: {
+      markdown: {
+        highlight: {
+          theme: 'github-dark-high-contrast',
+        },
+      },
     },
   },
 })

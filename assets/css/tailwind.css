@@ -24,6 +24,16 @@
     background: var(--bg);
     color: var(--text);
     line-height: 1.65;
+    font-family:
+      -apple-system,
+      BlinkMacSystemFont,
+      'SF Pro Display',
+      'SF Pro Text',
+      'Hiragino Sans',
+      'Hiragino Kaku Gothic ProN',
+      'Helvetica Neue',
+      Arial,
+      sans-serif;
   }
 
   a {
@@ -40,11 +50,11 @@
 
 @layer components {
   .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--surface) 80%, transparent);
+    border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
     border-radius: var(--radius);
-    padding: var(--s4);
-    backdrop-filter: blur(10px);
+    padding: var(--s3);
+    backdrop-filter: blur(6px);
   }
 
   .muted {

@@ -4,23 +4,22 @@ import { formatDate } from '~/utils/formatDate'
 const toAbsolutePath = (path?: string | null) =>
   path ? (path.startsWith('/') ? path : `/${path}`) : '/'
 
-const { data: articles } = await useAsyncData('articles', () =>
+const { data } = await useAsyncData('articles-page', () =>
   queryCollection('article')
     .select('path', 'title', 'date', 'summary', 'description', 'kind', 'tags')
     .order('date', 'DESC')
     .all()
 )
 
-const list = computed(() => articles.value ?? [])
+const articles = computed(() => data.value ?? [])
 </script>
 
 <template>
   <div class="mx-auto flex min-h-screen max-w-4xl flex-col gap-10 px-6 py-16">
     <MainNav />
-
     <div class="grid gap-6">
       <NuxtLink
-        v-for="article in list"
+        v-for="article in articles"
         :key="article.path"
         :to="toAbsolutePath(article.path)"
         class="card group transition hover:border-[var(--accent)]"
