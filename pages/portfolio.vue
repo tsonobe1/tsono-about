@@ -76,9 +76,6 @@ const onImageError = (event: Event) => {
                         :class="selected === type.key
                             ? 'border-[var(--accent)] bg-[var(--accent)] text-[#081014]'
                             : 'border-white/10 text-[var(--text)] hover:border-[var(--accent)] hover:text-[var(--accent)]'"
-                        role="button"
-                        :aria-pressed="selected === type.key"
-                        :aria-current="selected === type.key ? 'page' : undefined"
                     >
                         {{ type.label }}
                     </NuxtLink>
