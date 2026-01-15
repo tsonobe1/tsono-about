@@ -1,0 +1,11 @@
+title: "Mindmap App"
+type: "app"
+year: 2026
+url: "https://example.com"
+description: "Nuxt + D3 で作ったブラウザマインドマップ"
+featured: true
+order: 10
+cover: "/images/portfolio/mindmap/cover.png"
+gallery:
+  - "/images/portfolio/mindmap/01.png"
+  - "/images/portfolio/mindmap/02.png"
