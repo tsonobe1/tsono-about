@@ -39,6 +39,9 @@ const list = computed(() => articles.value ?? [])
           <h2 class="text-xl font-semibold text-[var(--text)]">
             {{ article.title }}
           </h2>
+          <p class="text-sm text-white/70" v-if="article.summary">
+            {{ article.summary }}
+          </p>
           <div
             class="flex flex-wrap gap-2 text-xs text-[var(--accent)]"
             v-if="article.tags?.length"

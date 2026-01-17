@@ -64,6 +64,35 @@ const formattedDate = computed(() => {
   }
   return ''
 })
+
+const formattedUpdatedAt = computed(() => {
+  const value = doc.value as null | { updatedAt?: string | Date }
+  if (
+    value &&
+    typeof value === 'object' &&
+    'updatedAt' in value &&
+    value.updatedAt
+  ) {
+    return formatDate(value.updatedAt)
+  }
+  return ''
+})
+
+const introText = computed(() => {
+  const value = doc.value as null | {
+    summary?: string | null
+    description?: string | null
+  }
+  if (value && typeof value === 'object') {
+    if ('summary' in value && value.summary) {
+      return value.summary
+    }
+    if ('description' in value && value.description) {
+      return value.description
+    }
+  }
+  return ''
+})
 </script>
 
 <template>
@@ -81,10 +110,16 @@ const formattedDate = computed(() => {
         <h1 class="text-4xl font-semibold text-[var(--text)]">
           {{ doc.title }}
         </h1>
-        <p v-if="formattedDate" class="muted text-sm">
-          {{ formattedDate }}
+        <div
+          v-if="formattedDate || formattedUpdatedAt"
+          class="flex flex-wrap gap-4 text-xs uppercase tracking-widest text-white/60"
+        >
+          <span v-if="formattedDate">公開日 {{ formattedDate }}</span>
+          <span v-if="formattedUpdatedAt">更新日 {{ formattedUpdatedAt }}</span>
+        </div>
+        <p v-if="introText" class="muted text-base">
+          {{ introText }}
         </p>
-        <p class="muted text-base">{{ doc.description }}</p>
       </header>
 
       <div class="card content">

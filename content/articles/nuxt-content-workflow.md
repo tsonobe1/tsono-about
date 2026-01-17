@@ -1,6 +1,7 @@
 ---
 title: 'Nuxt Contentでドキュメントを書く手順'
 date: '2026-01-08'
+updatedAt: '2026-01-08'
 kind: 'tech'
 tags:
   - nuxt

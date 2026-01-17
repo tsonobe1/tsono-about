@@ -18,17 +18,17 @@ const isActive = (to: string) => {
 
 <template>
   <nav
-    class="mt-4 mb-6 flex flex-wrap items-center justify-center gap-8 text-sm tracking-wide"
+    class="mx-auto mt-4 mb-8 flex max-w-2xl flex-wrap items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5/60 p-1 text-sm tracking-wide shadow-[0_8px_24px_rgba(5,9,20,0.35)] backdrop-blur"
   >
     <NuxtLink
       v-for="item in NAV_LINKS"
       :key="item.key"
       :to="item.to"
       :class="[
-        'inline-flex min-w-[80px] items-center justify-center px-2 py-1 transition hover:text-[var(--accent)]',
+        'relative inline-flex min-w-[88px] items-center justify-center rounded-full px-4 py-1.5 font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
         isActive(item.to)
-          ? 'text-base font-semibold text-[var(--accent)]'
-          : 'text-[var(--text)]',
+          ? 'bg-[var(--accent)] text-[#081014] shadow-[0_6px_18px_rgba(111,186,223,0.28)]'
+          : 'text-[var(--muted)] hover:bg-white/10 hover:text-[var(--text)]',
       ]"
       :aria-current="isActive(item.to) ? 'page' : undefined"
     >

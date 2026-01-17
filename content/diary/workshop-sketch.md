@@ -1,6 +1,7 @@
 ---
 title: '日曜のスケッチ会'
 date: '2026-01-12'
+updatedAt: '2026-01-12'
 category: 'other'
 description: '友人と 90 分で 6 枚描くチャレンジ。iPad だと色塗りが早い。'
 ---

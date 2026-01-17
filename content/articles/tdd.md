@@ -1,6 +1,7 @@
 ---
 title: 'TDDを実践してみて感じたこと'
 date: '2026-01-09'
+updatedAt: '2026-01-09'
 kind: 'essay'
 tags:
   - life

@@ -2,6 +2,7 @@
 title: 'Nuxt Content サンプル'
 description: 'Nuxt Contentで作成したサンプル記事です。'
 date: '2026-01-11'
+updatedAt: '2026-01-11'
 ---
 
 # Nuxt Content サンプル記事
