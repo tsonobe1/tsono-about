@@ -8,7 +8,7 @@ tags:
   - modal
   - jQuery
   - JavaScript
-summary: Bootstrap5では公式にサポートされていない入れ子モーダルを、jQueryとz-indexの制御によって実現する
+summary: Bootstrap5では公式にサポートされていない入れ子モーダルを作る
 ---
 
 ウェブアプリにおいて、ユーザーからの操作や情報入力を段階的に進めるために、複数のモーダルを重ねて表示したいケースがしばしば存在する。
@@ -268,6 +268,6 @@ $(function () {
 ```
 
 
-#### デモ
+### デモ
 
 ![test](/images/articles/bootstrap5-nested-modal/modal.gif)

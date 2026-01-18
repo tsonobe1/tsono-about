@@ -79,10 +79,103 @@
 
   .content h1,
   .content h2,
-  .content h3 {
+  .content h3,
+  .content h4,
+  .content h5,
+  .content h6 {
+    font-weight: 600;
+    line-height: 1.35;
+    scroll-margin-top: 96px;
+    color: inherit;
+  }
+
+  .content h1 {
+    margin-top: var(--s5);
+    margin-bottom: var(--s3);
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    padding-bottom: 0.4em;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+  }
+
+  .content h2 {
     margin-top: var(--s4);
     margin-bottom: var(--s2);
-    font-weight: 600;
+    font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+    padding-left: 0;
+  }
+
+  .content h3 {
+    margin-top: var(--s3);
+    margin-bottom: var(--s1);
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
+    letter-spacing: 0.01em;
+  }
+
+  .content h4 {
+    margin-top: var(--s2);
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.05rem, 1.6vw, 1.15rem);
+    text-transform: none;
+  }
+
+  .content h5,
+  .content h6 {
+    margin-top: var(--s2);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--text) 75%, transparent);
+  }
+
+  .content h1 > a,
+  .content h2 > a,
+  .content h3 > a,
+  .content h4 > a,
+  .content h5 > a,
+  .content h6 > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+
+  .content h1 > a:hover,
+  .content h2 > a:hover,
+  .content h3 > a:hover,
+  .content h4 > a:hover,
+  .content h5 > a:hover,
+  .content h6 > a:hover,
+  .content h1 > a:focus-visible,
+  .content h2 > a:focus-visible,
+  .content h3 > a:focus-visible,
+  .content h4 > a:focus-visible,
+  .content h5 > a:focus-visible,
+  .content h6 > a:focus-visible {
+    color: var(--accent);
+  }
+
+  .content h2 > a::after,
+  .content h3 > a::after,
+  .content h4 > a::after,
+  .content h5 > a::after,
+  .content h6 > a::after {
+    content: '#';
+    font-size: 0.75em;
+    color: var(--accent);
+    opacity: 0;
+    transform: translateY(-1px);
+    transition: opacity 0.15s ease;
+  }
+
+  .content h2:hover > a::after,
+  .content h3:hover > a::after,
+  .content h4:hover > a::after,
+  .content h5:hover > a::after,
+  .content h6:hover > a::after {
+    opacity: 0.85;
   }
 
   .content p {
