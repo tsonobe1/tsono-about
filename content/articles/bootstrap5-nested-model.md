@@ -19,12 +19,6 @@ summary: Bootstrap5では公式にサポートされていない入れ子モー�
 [Toggle between modals](https://getbootstrap.jp/docs/5.3/components/modal/#toggle-between-modals)
 
 ## なぜ消えるか
-### test3
-#### test4
-##### test5
-###### test6
-####### tset7
-
 通常、Bootstrap5のモーダルはdata属性を用いて展開する。
 
 ```html

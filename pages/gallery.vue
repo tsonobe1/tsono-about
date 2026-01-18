@@ -7,18 +7,18 @@ const TYPES = [
   { key: 'other', label: 'Other' },
 ] as const
 
-type PortfolioType = (typeof TYPES)[number]['key']
+type GalleryType = (typeof TYPES)[number]['key']
 
 const route = useRoute()
-const selected = computed<PortfolioType>(() => {
+const selected = computed<GalleryType>(() => {
   const q = route.query.type
   return typeof q === 'string' && TYPES.some((t) => t.key === q)
-    ? (q as PortfolioType)
+    ? (q as GalleryType)
     : 'app'
 })
 
-const { data: items } = await useAsyncData('portfolio', () =>
-  queryCollection('portfolio').all(),
+const { data: items } = await useAsyncData('gallery', () =>
+  queryCollection('gallery').all(),
 )
 
 const filtered = computed(() => {

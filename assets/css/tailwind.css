@@ -90,19 +90,25 @@
   }
 
   .content ul {
-    margin: var(--s2) 0 var(--s3);
+    margin: var(--s1) 0;
     padding-left: var(--s4);
     list-style: disc;
   }
 
   .content ol {
-    margin: var(--s2) 0 var(--s3);
+    margin: var(--s1) 0;
     padding-left: var(--s4);
     list-style: decimal;
   }
 
   .content li + li {
-    margin-top: 0.5em;
+    margin-top: 0.25em;
+  }
+
+  .content li > ul,
+  .content li > ol {
+    margin: 0.25em 0 0.35em;
+    padding-left: var(--s3);
   }
 
   .content :not(pre) > code {

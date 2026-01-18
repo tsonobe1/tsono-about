@@ -2,7 +2,7 @@
 const NAV_LINKS = [
   { key: 'articles', label: 'Article', to: '/articles' },
   { key: 'diary', label: 'Diary', to: '/diary' },
-  { key: 'portfolio', label: 'Portfolio', to: '/portfolio' },
+  { key: 'gallery', label: 'Gallery', to: '/gallery' },
   { key: 'about', label: 'About', to: '/about' },
 ] as const
 

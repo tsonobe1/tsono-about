@@ -33,9 +33,9 @@ export default defineContentConfig({
     }),
 
     // 3. 作品
-    portfolio: defineCollection({
+    gallery: defineCollection({
       type: 'data',
-      source: 'portfolio/**/*.yml',
+      source: 'gallery/**/*.yml',
       schema: z.object({
         title: z.string(),
         type: z.enum(['diy', 'music', 'app', 'design', 'other']),

@@ -18,8 +18,9 @@ tags:
 
 ## 経緯: target="_blank" のリンクが開かない
 このブログでは、外部リンクに `target="_blank"` を付けることで、デフォルトで新しいタブを開くようにしている。
-::warning
-※ 2026/01/17時点では Nuxt Content でブログを書いていますが、当時は Hugo で作成していました。
+
+::note
+2026/01/17時点では Nuxt Content でブログを書いていますが、当時は Hugo で作成していました。
 ::
 
 ところが、本番環境に記事を公開して閲覧していたところ、外部リンクが正しく開かない現象に遭遇した。
@@ -48,7 +49,7 @@ Disqus はウェブサイトやブログにコメントを追加できるサー�
 2007年頃の立ち上げから2013年頃に向けてバズった模様。それ移行も「Disqus導入してみた」系の記事は散見され、私も Hugo で作成している本ブログに導入した。
 それが 2024年8月初旬頃。
 
-Disqus には、外部リンクを自動的にアフィリエイトリンクに差し替える ****Affiliate Links**** 機能がある。これにより収益を得ている模様。
+Disqus には、外部リンクを自動的にアフィリエイトリンクに差し替える *Affiliate Links* 機能がある。これにより収益を得ている模様。
 [The Disqus Affiliated Links Program](https://tuhrig.de/the-disqus-affiliated-links-program/?utm_source=chatgpt.com)
 
 Disqusで新しいサイトを作成するとデフォルトで有効化されている。
@@ -63,9 +64,8 @@ Disqusで新しいサイトを作成するとデフォルトで有効化され�
 うーん、よくわからない
 
 ## 解決方法
-
-- とりあえずDisqusのアフィリエイトリンク設定を無効にすること
-  1. `https://<disqusの自サイト>.disqus.com/admin/settings/advanced/` にアクセス
+とりあえずDisqusのアフィリエイトリンク設定を無効にすること
+  1. [Disqus Advanced Settings](https://<disqusの自サイト>.disqus.com/admin/settings/advanced/) にアクセス
   2. `affiliate links` のチェックを外す
 
 {{< figure src="/結論/2025-09-14_20-06-36_スクリーンショット 2025-09-14 20.06.30.png" title="Disqusのアフィリエイトリンクを無効にする" width="720" >}}
@@ -79,14 +79,13 @@ Disqusで新しいサイトを作成するとデフォルトで有効化され�
 でも問題なく遷移できた。
 
 #### テスト用ページ
-{{< linkcard "https://tsonobe1.github.io/gisqus_link_test/" >}}
+[Disqus Affiliate Links テスト](https://tsonobe1.github.io/gisqus_link_test/)
 
 執筆時は確かに記事冒頭の動作だった気がするけど...
 
-
 ## 新規タブで開きたい `<a>タグ` の属性はどうすべきか
 
-良い機会なので調べ直してみました。
+良い機会なので調べ直してみた。
 - `noreferrer`
   - ページA → ページB の遷移時に、 `HTTP Referer` ヘッダの送信を省略する
 - `noopener`
@@ -94,26 +93,18 @@ Disqusで新しいサイトを作成するとデフォルトで有効化され�
   - `HTTP Referer` ヘッダは送信される
 - `noreferrer` を設定すると、 `noopener` の設定が自動付与される
 - `window.opener.location = "<URL>"` のように書き換えると、ページAのタブを任意のページCに遷移できる
-  - この仕様を用いた攻撃を [Tabnabbing](https://owasp.org/www-community/attacks/Reverse_Tabnabbing?utm_source=chatgpt.com) という 
+  - この仕様を用いた攻撃を `Tabnabbing` という
+  - [Tabnabbing](https://owasp.org/www-community/attacks/Reverse_Tabnabbing?utm_source=chatgpt.com) 
 - 今のモダンなブラウザでは `target="_blank"` なタグには暗黙的に `noopener` 相当の処理が自動付与される
-  - {{< linkcard "https://www.stefanjudis.com/today-i-learned/target-blank-implies-rel-noopener/?utm_source=chatgpt.com" >}}
+  - [Target=_blank implies rel=noopener | Stefan Judis Web Development](https://www.stefanjudis.com/today-i-learned/target-blank-implies-rel-noopener/?utm_source=chatgpt.com)
   - つまり、`window.opener` が null となる
 - `noreferrer` はリファラを一切渡さないため、アクセス解析に支障をもたらす
-  - {{< linkcard "https://cinci.jp/blog/20240723-review-target-blank-noopener-noreferrer-practices" >}} 
+  - [別タブへのリンク記述「target="_blank"とrel="noopener noreferrer"」の見直しを - 株式会社真摯](https://cinci.jp/blog/20240723-review-target-blank-noopener-noreferrer-practices) 
 - Referer情報をどのくらい含めるかは `Referrer-Policy` で設定する
   - デフォは `strict-origin-when-cross-origin`
 
-### よって
+### まとめ
 
 - 単なる技術ブログでは外部リンクに
   - `noreferrer属性` は不要
   - `noopener属性` も明示しなくていい
-
-
-## まとめ
-- アフィリエイトリンク機能は無効化にしておいたほうがよさそう
-- 新規タブで開きたい `<a>タグ` に `noreffere属性` と `noopener属性` を付ける必要はない
-
-Disqusが埋め込むスクリプトの詳細な仕組みや、1回目は正しくリンク先が開くのに2回目以降は真っ白なタブになってしまう理由は不明ですが、もう `noreferrer` は不要であることがわかってよかったです。
-
-というか、Disqusのコメント欄に広告が出るようになってしまったので消そうかな...
