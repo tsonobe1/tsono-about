@@ -1,7 +1,7 @@
 import { defineNuxtConfig } from 'nuxt/config'
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/content', '@nuxt/eslint'],
+  modules: ['@nuxt/content', '@nuxt/eslint', '@nuxt/image'],
   css: ['~/assets/css/tailwind.css'],
   postcss: {
     plugins: {
@@ -17,5 +17,8 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+  image: {
+    dir: 'public',
   },
 })

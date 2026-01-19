@@ -2,6 +2,7 @@
 title: target='_blank'なリンクが開かない
 date: 2025-08-24
 updatedAt: 2025-09-15
+kind: 'tech'
 tags:
   - 'Disqus'
   - 'target_blank'
@@ -104,10 +105,10 @@ Disqusで新しいサイトを作成するとデフォルトで有効化され�
   - この仕様を用いた攻撃を `Tabnabbing` という
   - [Tabnabbing](https://owasp.org/www-community/attacks/Reverse_Tabnabbing?utm_source=chatgpt.com)
 - 今のモダンなブラウザでは `target="_blank"` なタグには暗黙的に `noopener` 相当の処理が自動付与される
-  - [Target=_blank implies rel=noopener | Stefan Judis Web Development](https://www.stefanjudis.com/today-i-learned/target-blank-implies-rel-noopener/?utm_source=chatgpt.com)
+  - [Target=\_blank implies rel=noopener | Stefan Judis Web Development](https://www.stefanjudis.com/today-i-learned/target-blank-implies-rel-noopener/?utm_source=chatgpt.com)
   - つまり、`window.opener` が null となる
 - `noreferrer` はリファラを一切渡さないため、アクセス解析に支障をもたらす
-  - [別タブへのリンク記述「target="_blank"とrel="noopener noreferrer"」の見直しを - 株式会社真摯](https://cinci.jp/blog/20240723-review-target-blank-noopener-noreferrer-practices)
+  - [別タブへのリンク記述「target="\_blank"とrel="noopener noreferrer"」の見直しを - 株式会社真摯](https://cinci.jp/blog/20240723-review-target-blank-noopener-noreferrer-practices)
 - Referer情報をどのくらい含めるかは `Referrer-Policy` で設定する
   - デフォは `strict-origin-when-cross-origin`
 

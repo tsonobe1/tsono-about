@@ -22,6 +22,7 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.0.0",
     "@nuxt/eslint-config": "^1.0.0",
+    "@nuxt/image": "^2.0.0",
     "eslint": "^9.7.0",
     "eslint-config-prettier": "^10.0.0",
     "knip": "^5.80.2",
@@ -34,8 +35,9 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "@parcel/watcher",
+      "better-sqlite3",
       "esbuild",
-      "better-sqlite3"
+      "sharp"
     ]
   }
 }

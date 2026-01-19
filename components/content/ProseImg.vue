@@ -13,6 +13,41 @@ const props = withDefaults(
 )
 
 const isModalOpen = ref(false)
+const inlineSizes = '(max-width: 768px) 100vw, 768px'
+const modalSizes = '(max-width: 1024px) 90vw, 1200px'
+const imageMeta = shallowRef<{ width: number; height: number } | null>(null)
+const currentMetaSrc = ref('')
+const { getMeta } = useImage()
+
+watch(
+  () => props.src,
+  async (src) => {
+    if (!src) {
+      imageMeta.value = null
+      currentMetaSrc.value = ''
+      return
+    }
+
+    currentMetaSrc.value = src
+    try {
+      const meta = await getMeta(src)
+      if (
+        currentMetaSrc.value === src &&
+        meta &&
+        typeof meta.width === 'number' &&
+        typeof meta.height === 'number'
+      ) {
+        imageMeta.value = { width: meta.width, height: meta.height }
+      }
+    } catch (error) {
+      console.warn('[ProseImg] Failed to load image metadata', error)
+      if (currentMetaSrc.value === src) {
+        imageMeta.value = null
+      }
+    }
+  },
+  { immediate: true },
+)
 
 function openModal() {
   if (!props.src) {
@@ -52,13 +87,18 @@ onBeforeUnmount(() => {
       @keydown.enter.prevent="openModal"
       @keydown.space.prevent="openModal"
     >
-      <img
+      <NuxtImg
         :src="props.src"
         :alt="props.alt"
         :title="props.title || undefined"
+        :sizes="inlineSizes"
+        :width="imageMeta?.width"
+        :height="imageMeta?.height"
         class="max-w-full rounded-xl border border-white/10 transition-transform duration-200 ease-out group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-active:scale-[0.99]"
         loading="lazy"
         decoding="async"
+        format="webp"
+        placeholder="blur"
       />
     </div>
     <figcaption v-if="props.alt" class="text-sm muted">
@@ -76,14 +116,22 @@ onBeforeUnmount(() => {
         @click="closeModal"
       >
         <div class="flex h-full w-full items-center justify-center p-6">
-          <div class="relative flex max-h-[90vh] max-w-5xl flex-col items-center gap-4">
-            <img
+          <div
+            class="relative flex w-full max-w-4xl flex-col items-center gap-4"
+            style="max-height: 90vh"
+          >
+            <NuxtImg
               :src="props.src"
               :alt="props.alt"
               :title="props.title || undefined"
-              class="max-h-[85vh] w-auto max-w-full rounded-2xl border border-white/10 shadow-2xl"
+              :sizes="modalSizes"
+              :width="imageMeta?.width"
+              :height="imageMeta?.height"
+              class="max-h-[85vh] w-full max-w-3xl rounded-2xl border border-white/10 object-contain shadow-2xl"
               loading="lazy"
               decoding="async"
+              format="webp"
+              placeholder="blur"
               @click.stop
             />
             <p v-if="props.alt" class="text-sm text-white/80">
