@@ -184,7 +184,9 @@ function buildExternalInfo(
     :target="isExternal ? '_blank' : undefined"
     :rel="isExternal ? 'noopener noreferrer' : undefined"
   >
-    <div class="flex items-center gap-1.5 text-sm font-medium leading-tight text-[var(--text)]">
+    <div
+      class="flex items-center gap-1.5 text-sm font-medium leading-tight text-[var(--text)]"
+    >
       <span
         class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--accent)]/15 text-[var(--accent)] transition group-hover:bg-[var(--accent)] group-hover:text-white"
       >
@@ -209,7 +211,9 @@ function buildExternalInfo(
         <slot />
       </span>
     </div>
-    <p class="mt-0 text-[0.65rem] text-white/70 transition group-hover:text-white">
+    <p
+      class="mt-0 text-[0.65rem] text-white/70 transition group-hover:text-white"
+    >
       {{ externalInfo.hostname }}
     </p>
   </a>

@@ -87,7 +87,8 @@ const introText = computed(() => {
     if ('summary' in value && value.summary) {
       return value.summary
     }
-    const allowDescription = collectionKey.value === 'diary' || collectionKey.value === 'career'
+    const allowDescription =
+      collectionKey.value === 'diary' || collectionKey.value === 'career'
     if (allowDescription && 'description' in value && value.description) {
       return value.description
     }

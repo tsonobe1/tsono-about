@@ -3,7 +3,7 @@ title: Bootstrap5で入れ子モーダルを実現する
 date: 2025-07-19
 updatedAt: 2025-07-19
 kind: tech
-tags: 
+tags:
   - Bootstrap5
   - modal
   - jQuery
@@ -19,12 +19,11 @@ summary: Bootstrap5では公式にサポートされていない入れ子モー�
 [Toggle between modals](https://getbootstrap.jp/docs/5.3/components/modal/#toggle-between-modals)
 
 ## なぜ消えるか
+
 通常、Bootstrap5のモーダルはdata属性を用いて展開する。
 
 ```html
-<button class="btn btn-primary"
-        data-bs-target="#modalA"
-        data-bs-toggle="modal">
+<button class="btn btn-primary" data-bs-target="#modalA" data-bs-toggle="modal">
   Open second modal
 </button>
 ```
@@ -56,7 +55,6 @@ data.toggle(this)
 `show()` には上述の処理は含まれてないため複数のモーダルを同時に表示できる。
 あとはモーダルと背景となる `backdrop` の `z-index` を調整してうまく層を作ればいい。
 
-
 ## サンプル
 
 以下は `jQuery` でモーダルの表示トリガーを監視し、モーダルの `z-index` と `backdrop` を管理することで入れ子モーダルを実装している。
@@ -66,18 +64,18 @@ data.toggle(this)
 ```js
 $(function () {
   $(document).on('click', '.show-modal', function () {
-    const nextId = $(this).data('show-modal');
-    if (nextId) showModal(nextId);
-  });
+    const nextId = $(this).data('show-modal')
+    if (nextId) showModal(nextId)
+  })
 
   function showModal(modalId) {
-    const newModal = $('#' + modalId);
-    const modalInstance = new bootstrap.Modal(newModal[0]);
-    modalInstance.show();
+    const newModal = $('#' + modalId)
+    const modalInstance = new bootstrap.Modal(newModal[0])
+    modalInstance.show()
 
-    _setupModalZIndex(newModal);
-    _setupBackdrop(modalId);
-    _cleanupModal(newModal, modalId);
+    _setupModalZIndex(newModal)
+    _setupBackdrop(modalId)
+    _cleanupModal(newModal, modalId)
   }
 
   /**
@@ -87,11 +85,11 @@ $(function () {
    */
   function _setupModalZIndex(modal) {
     modal.one('shown.bs.modal', function () {
-      const modalCount = $('.modal.show').length;
-      const zIndex = 1040 + (10 * modalCount);
-      modal.css('z-index', zIndex);
-      modal.data('zIndex', zIndex); // backdropで使うために保存しておく
-    });
+      const modalCount = $('.modal.show').length
+      const zIndex = 1040 + 10 * modalCount
+      modal.css('z-index', zIndex)
+      modal.data('zIndex', zIndex) // backdropで使うために保存しておく
+    })
   }
 
   /**
@@ -101,18 +99,16 @@ $(function () {
   function _setupBackdrop(modalId) {
     // z-index の設定は shown.bs.modal の後でないと正しい数にならない
     $('#' + modalId).one('shown.bs.modal', function () {
-      const modal = $(this);
-      const zIndex = modal.data('zIndex');
+      const modal = $(this)
+      const zIndex = modal.data('zIndex')
 
-      const backdrop = $('.modal-backdrop')
-        .not('.modal-stack')
-        .last();
+      const backdrop = $('.modal-backdrop').not('.modal-stack').last()
 
       backdrop
         .css('z-index', zIndex - 1) // モーダルより1つ下に配置
         .addClass('modal-stack')
-        .attr('data-backdrop-for', modalId); // 削除処理のためにモーダルIDで関連付け
-    });
+        .attr('data-backdrop-for', modalId) // 削除処理のためにモーダルIDで関連付け
+    })
   }
 
   /**
@@ -121,33 +117,39 @@ $(function () {
    */
   function _cleanupModal(modal, modalId) {
     modal.one('hidden.bs.modal', () => {
-      $(`.modal-backdrop[data-backdrop-for="${modalId}"]`).remove();
+      $(`.modal-backdrop[data-backdrop-for="${modalId}"]`).remove()
 
-      const openModals = $('.modal.show');
+      const openModals = $('.modal.show')
       if (openModals.length > 0) {
         // 親モーダルにフォーカスを当てる
-        const lastModal = openModals.last();
-        const focusTarget = lastModal.find('[autofocus], .btn-close, .btn, input, select').first();
-        if (focusTarget.length) focusTarget.trigger('focus');
+        const lastModal = openModals.last()
+        const focusTarget = lastModal
+          .find('[autofocus], .btn-close, .btn, input, select')
+          .first()
+        if (focusTarget.length) focusTarget.trigger('focus')
       } else {
         // 最後のモーダルを閉じた場合、bodyにフォーカスを逃がす（アクセシビリティ対策）
-        $(document.activeElement).trigger('blur');
-        $('body').trigger('focus');
+        $(document.activeElement).trigger('blur')
+        $('body').trigger('focus')
       }
-    });
+    })
   }
-});
+})
 ```
-
 
 #### html
 
 ```html
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<button class="btn btn-primary show-modal" data-show-modal="modal1">Open Modal 1</button>
+<button class="btn btn-primary show-modal" data-show-modal="modal1">
+  Open Modal 1
+</button>
 
 <!-- モーダル1 -->
 <div class="modal" id="modal1" tabindex="-1">
@@ -155,10 +157,16 @@ $(function () {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Modal 1</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
       </div>
       <div class="modal-body">
-        <button class="btn btn-secondary show-modal" data-show-modal="modal2">Open Modal 2</button>
+        <button class="btn btn-secondary show-modal" data-show-modal="modal2">
+          Open Modal 2
+        </button>
       </div>
     </div>
   </div>
@@ -170,10 +178,16 @@ $(function () {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Modal 2</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
       </div>
       <div class="modal-body">
-        <button class="btn btn-secondary show-modal" data-show-modal="modal3">Open Modal 3</button>
+        <button class="btn btn-secondary show-modal" data-show-modal="modal3">
+          Open Modal 3
+        </button>
       </div>
     </div>
   </div>
@@ -185,10 +199,16 @@ $(function () {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Modal 3</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
       </div>
       <div class="modal-body">
-        <button class="btn btn-secondary show-modal" data-show-modal="modal4">Open Modal 4</button>
+        <button class="btn btn-secondary show-modal" data-show-modal="modal4">
+          Open Modal 4
+        </button>
       </div>
     </div>
   </div>
@@ -200,10 +220,16 @@ $(function () {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Modal 4</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
       </div>
       <div class="modal-body">
-        <button class="btn btn-secondary show-modal" data-show-modal="modal5">Open Modal 5</button>
+        <button class="btn btn-secondary show-modal" data-show-modal="modal5">
+          Open Modal 5
+        </button>
       </div>
     </div>
   </div>
@@ -215,7 +241,11 @@ $(function () {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Modal 5</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
       </div>
       <div class="modal-body">
         <p>Last modal (5)</p>
@@ -266,7 +296,6 @@ $(function () {
 ```html
 <button class="btn show-modal" data-show-modal="modal1">Open Modal 1</button>
 ```
-
 
 ### デモ
 
