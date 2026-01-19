@@ -18,6 +18,9 @@ const modalSizes = '(max-width: 1024px) 90vw, 1200px'
 const imageMeta = shallowRef<{ width: number; height: number } | null>(null)
 const currentMetaSrc = ref('')
 const { getMeta } = useImage()
+const isGif = computed(() =>
+  props.src ? props.src.trim().toLowerCase().endsWith('.gif') : false,
+)
 
 watch(
   () => props.src,
@@ -88,6 +91,7 @@ onBeforeUnmount(() => {
       @keydown.space.prevent="openModal"
     >
       <NuxtImg
+        v-if="!isGif"
         :src="props.src"
         :alt="props.alt"
         :title="props.title || undefined"
@@ -99,6 +103,17 @@ onBeforeUnmount(() => {
         decoding="async"
         format="webp"
         placeholder="blur"
+      />
+      <img
+        v-else
+        :src="props.src"
+        :alt="props.alt"
+        :title="props.title || undefined"
+        :width="imageMeta?.width || undefined"
+        :height="imageMeta?.height || undefined"
+        class="max-w-full rounded-xl border border-white/10 transition-transform duration-200 ease-out group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-active:scale-[0.99]"
+        loading="lazy"
+        decoding="async"
       />
     </div>
     <figcaption v-if="props.alt" class="text-sm muted">
@@ -121,6 +136,7 @@ onBeforeUnmount(() => {
             style="max-height: 90vh"
           >
             <NuxtImg
+              v-if="!isGif"
               :src="props.src"
               :alt="props.alt"
               :title="props.title || undefined"
@@ -132,6 +148,18 @@ onBeforeUnmount(() => {
               decoding="async"
               format="webp"
               placeholder="blur"
+              @click.stop
+            />
+            <img
+              v-else
+              :src="props.src"
+              :alt="props.alt"
+              :title="props.title || undefined"
+              :width="imageMeta?.width || undefined"
+              :height="imageMeta?.height || undefined"
+              class="max-h-[85vh] w-full max-w-3xl rounded-2xl border border-white/10 object-contain shadow-2xl"
+              loading="lazy"
+              decoding="async"
               @click.stop
             />
             <p v-if="props.alt" class="text-sm text-white/80">

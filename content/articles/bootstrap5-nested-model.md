@@ -299,4 +299,17 @@ $(function () {
 
 ### デモ
 
-![test](/images/articles/bootstrap5-nested-modal/modal.gif)
+<video
+class="rounded-xl border border-white/10"
+autoplay
+muted
+loop
+playsinline
+controls
+
+>
+
+  <source src="/images/articles/bootstrap5-nested-modal/modal.webm" type="video/webm" />
+  <source src="/images/articles/bootstrap5-nested-modal/modal.mp4" type="video/mp4" />
+  <img src="/images/articles/bootstrap5-nested-modal/modal.gif" alt="nested modal demo" />
+</video>
