@@ -13,109 +13,46 @@ const props = withDefaults(
 )
 
 const isModalOpen = ref(false)
-const inlineSizes = '(max-width: 768px) 100vw, 768px'
-const modalSizes = '(max-width: 1024px) 90vw, 1200px'
-const imageMeta = shallowRef<{ width: number; height: number } | null>(null)
-const currentMetaSrc = ref('')
-const { getMeta } = useImage()
-const isGif = computed(() =>
-  props.src ? props.src.trim().toLowerCase().endsWith('.gif') : false,
-)
-
-watch(
-  () => props.src,
-  async (src) => {
-    if (!src) {
-      imageMeta.value = null
-      currentMetaSrc.value = ''
-      return
-    }
-
-    currentMetaSrc.value = src
-    try {
-      const meta = await getMeta(src)
-      if (
-        currentMetaSrc.value === src &&
-        meta &&
-        typeof meta.width === 'number' &&
-        typeof meta.height === 'number'
-      ) {
-        imageMeta.value = { width: meta.width, height: meta.height }
-      }
-    } catch (error) {
-      console.warn('[ProseImg] Failed to load image metadata', error)
-      if (currentMetaSrc.value === src) {
-        imageMeta.value = null
-      }
-    }
-  },
-  { immediate: true },
-)
 
 function openModal() {
-  if (!props.src) {
-    return
+  if (props.src) {
+    isModalOpen.value = true
   }
-  isModalOpen.value = true
 }
 
 function closeModal() {
   isModalOpen.value = false
 }
 
-function handleGlobalKeydown(event: KeyboardEvent) {
+function handleKeydown(event: KeyboardEvent) {
   if (event.key === 'Escape' && isModalOpen.value) {
     closeModal()
   }
 }
 
 onMounted(() => {
-  window.addEventListener('keydown', handleGlobalKeydown)
+  window.addEventListener('keydown', handleKeydown)
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('keydown', handleGlobalKeydown)
+  window.removeEventListener('keydown', handleKeydown)
 })
 </script>
 
 <template>
-  <figure class="my-8 flex flex-col items-center gap-3 text-center">
-    <div
-      v-if="props.src"
-      class="group inline-block cursor-zoom-in focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-      tabindex="0"
-      role="button"
-      aria-label="画像を拡大表示"
+  <figure
+    v-if="props.src"
+    class="my-8 flex flex-col items-center gap-3 text-center"
+  >
+    <img
+      :src="props.src"
+      :alt="props.alt"
+      :title="props.title || undefined"
+      class="max-w-full max-h-[70vh] cursor-zoom-in rounded-xl border border-white/10 object-contain"
+      loading="lazy"
+      decoding="async"
       @click="openModal"
-      @keydown.enter.prevent="openModal"
-      @keydown.space.prevent="openModal"
-    >
-      <NuxtImg
-        v-if="!isGif"
-        :src="props.src"
-        :alt="props.alt"
-        :title="props.title || undefined"
-        :sizes="inlineSizes"
-        :width="imageMeta?.width"
-        :height="imageMeta?.height"
-        class="max-w-full rounded-xl border border-white/10 transition-transform duration-200 ease-out group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-active:scale-[0.99]"
-        loading="lazy"
-        decoding="async"
-        format="webp"
-        placeholder="blur"
-      />
-      <img
-        v-else
-        :src="props.src"
-        :alt="props.alt"
-        :title="props.title || undefined"
-        :width="imageMeta?.width || undefined"
-        :height="imageMeta?.height || undefined"
-        class="max-w-full rounded-xl border border-white/10 transition-transform duration-200 ease-out group-hover:-translate-y-1 group-focus-visible:-translate-y-1 group-active:scale-[0.99]"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
+    />
     <figcaption v-if="props.alt" class="text-sm muted">
       {{ props.alt }}
     </figcaption>
@@ -125,47 +62,20 @@ onBeforeUnmount(() => {
     <Transition name="prose-img-fade">
       <div
         v-if="isModalOpen"
-        class="fixed inset-0 z-[999] bg-black/40 backdrop-blur-sm"
+        class="fixed inset-0 z-[999] bg-black/60 backdrop-blur-sm"
         role="dialog"
         aria-modal="true"
         @click="closeModal"
       >
         <div class="flex h-full w-full items-center justify-center p-6">
-          <div
-            class="relative flex w-full max-w-4xl flex-col items-center gap-4"
-            style="max-height: 90vh"
-          >
-            <NuxtImg
-              v-if="!isGif"
-              :src="props.src"
-              :alt="props.alt"
-              :title="props.title || undefined"
-              :sizes="modalSizes"
-              :width="imageMeta?.width"
-              :height="imageMeta?.height"
-              class="max-h-[85vh] w-full max-w-3xl rounded-2xl border border-white/10 object-contain shadow-2xl"
-              loading="lazy"
-              decoding="async"
-              format="webp"
-              placeholder="blur"
-              @click.stop
-            />
-            <img
-              v-else
-              :src="props.src"
-              :alt="props.alt"
-              :title="props.title || undefined"
-              :width="imageMeta?.width || undefined"
-              :height="imageMeta?.height || undefined"
-              class="max-h-[85vh] w-full max-w-3xl rounded-2xl border border-white/10 object-contain shadow-2xl"
-              loading="lazy"
-              decoding="async"
-              @click.stop
-            />
-            <p v-if="props.alt" class="text-sm text-white/80">
-              {{ props.alt }}
-            </p>
-          </div>
+          <img
+            :src="props.src"
+            :alt="props.alt"
+            :title="props.title || undefined"
+            class="max-h-[85vh] w-full rounded-2xl border border-white/20 object-contain shadow-2xl"
+            style="max-width: min(90vw, 1200px)"
+            @click.stop
+          />
         </div>
       </div>
     </Transition>

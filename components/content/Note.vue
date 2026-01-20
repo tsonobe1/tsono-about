@@ -12,8 +12,7 @@
 
 <style scoped>
 blockquote {
-  margin: 0;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem;
   padding: 1px 1rem 1px 1rem;
   border-left: 0.25rem solid #0969da;
 }
