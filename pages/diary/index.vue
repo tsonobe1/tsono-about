@@ -22,7 +22,7 @@ const entries = computed(() => data.value ?? [])
         v-for="entry in entries"
         :key="entry.path"
         :to="toAbsolutePath(entry.path)"
-        class="card group transition hover:border-[var(--accent)]"
+        class="card transition"
       >
         <div class="flex flex-col gap-2">
           <div class="flex items-center gap-3 text-xs tracking-widest">
@@ -36,9 +36,7 @@ const entries = computed(() => data.value ?? [])
               {{ entry.date ? formatDate(entry.date) : '----/--/--' }}
             </span>
           </div>
-          <h2
-            class="text-xl font-semibold text-[var(--text)] transition group-hover:text-[var(--accent)]"
-          >
+          <h2 class="text-xl font-semibold text-[var(--text)]">
             {{ entry.title }}
           </h2>
         </div>

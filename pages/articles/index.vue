@@ -22,7 +22,7 @@ const articles = computed(() => data.value ?? [])
         v-for="article in articles"
         :key="article.path"
         :to="toAbsolutePath(article.path)"
-        class="card group transition hover:border-[var(--accent)]"
+        class="card group transition"
       >
         <div class="flex flex-col gap-2">
           <div class="flex items-center gap-2 text-xs tracking-widest">
@@ -38,12 +38,6 @@ const articles = computed(() => data.value ?? [])
           <h2 class="text-xl font-semibold text-[var(--text)]">
             {{ article.title }}
           </h2>
-          <div
-            class="flex flex-wrap gap-2 text-xs text-[var(--accent)]"
-            v-if="article.tags?.length"
-          >
-            <span v-for="tag in article.tags" :key="tag">#{{ tag }}</span>
-          </div>
         </div>
       </NuxtLink>
     </div>

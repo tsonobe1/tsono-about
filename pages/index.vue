@@ -62,7 +62,7 @@ const typeLabel = (entry: TimelinedEntry) =>
         v-for="entry in timeline"
         :key="entry.path"
         :to="toAbsolutePath(entry.path)"
-        class="card group transition hover:border-[var(--accent)]"
+        class="card transition"
       >
         <div class="flex flex-col gap-2">
           <div class="flex items-center gap-3 text-xs tracking-widest">
@@ -75,14 +75,9 @@ const typeLabel = (entry: TimelinedEntry) =>
               {{ entry.date ? formatDate(entry.date) : '----/--/--' }}
             </span>
           </div>
-          <h2
-            class="text-xl font-semibold text-[var(--text)] transition group-hover:text-[var(--accent)]"
-          >
+          <h2 class="text-xl font-semibold text-[var(--text)]">
             {{ entry.title }}
           </h2>
-          <p class="text-sm text-white/70 line-clamp-2" v-if="entry.summary">
-            {{ entry.summary }}
-          </p>
         </div>
       </NuxtLink>
       <p v-if="!timeline.length" class="muted text-center text-sm">

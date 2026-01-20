@@ -49,6 +49,13 @@
     border-radius: var(--radius);
     padding: var(--s3);
     backdrop-filter: blur(6px);
+    text-shadow: none;
+    color: inherit;
+  }
+
+  a.card:hover {
+    color: inherit;
+    text-shadow: none;
   }
 
   .muted {
