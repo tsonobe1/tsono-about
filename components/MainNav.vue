@@ -1,12 +1,25 @@
 <script setup lang="ts">
-const NAV_LINKS = [
+const PRIMARY_LINKS = [
   { key: 'articles', label: 'Article', to: '/articles' },
   { key: 'diary', label: 'Diary', to: '/diary' },
   { key: 'gallery', label: 'Gallery', to: '/gallery' },
-  { key: 'about', label: 'About', to: '/about' },
 ] as const
 
+const ISLAND_LINK = { key: 'about', label: 'About', to: '/about' } as const
+
 const route = useRoute()
+const router = useRouter()
+
+const primaryActive = computed(() => {
+  if (route.path === '/') {
+    return true
+  }
+  return ['/articles', '/diary', '/gallery'].some((prefix) =>
+    route.path.startsWith(prefix),
+  )
+})
+
+const aboutActive = computed(() => route.path.startsWith('/about'))
 
 const isActive = (to: string) => {
   if (to === '/') {
@@ -14,25 +27,70 @@ const isActive = (to: string) => {
   }
   return route.path === to || route.path.startsWith(`${to}/`)
 }
+
+const shouldReturnHome = (key: string) =>
+  (key === 'articles' || key === 'diary') && isActive(`/${key}`)
+
+const handlePrimaryClick = (
+  event: MouseEvent,
+  item: (typeof PRIMARY_LINKS)[number],
+) => {
+  if (shouldReturnHome(item.key)) {
+    event.preventDefault()
+    router.push('/')
+  }
+}
 </script>
 
 <template>
   <nav
-    class="mx-auto mt-4 mb-8 flex max-w-2xl flex-wrap items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5/60 p-1 text-sm tracking-wide shadow-[0_8px_24px_rgba(5,9,20,0.35)] backdrop-blur"
+    class="mx-auto mt-4 mb-8 flex max-w-3xl flex-wrap items-center justify-center gap-4 text-sm tracking-wide"
   >
-    <NuxtLink
-      v-for="item in NAV_LINKS"
-      :key="item.key"
-      :to="item.to"
+    <div
       :class="[
-        'relative inline-flex min-w-[88px] items-center justify-center rounded-full px-4 py-1.5 font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
-        isActive(item.to)
-          ? 'bg-[var(--accent)] text-[#081014] shadow-[0_6px_18px_rgba(111,186,223,0.28)]'
-          : 'text-[var(--muted)] hover:bg-white/10 hover:text-[var(--text)]',
+        'inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-2 py-1.5 transition-all duration-200',
+        primaryActive
+          ? 'border border-[var(--accent)]'
+          : 'border border-white/10',
       ]"
-      :aria-current="isActive(item.to) ? 'page' : undefined"
     >
-      {{ item.label }}
-    </NuxtLink>
+      <NuxtLink
+        v-for="item in PRIMARY_LINKS"
+        :key="item.key"
+        :to="item.to"
+        @click="(event) => handlePrimaryClick(event, item)"
+        :class="[
+          'relative inline-flex min-w-[88px] items-center justify-center rounded-full px-4 py-1.5 font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
+          isActive(item.to)
+            ? 'bg-[var(--accent)] text-[#081014] shadow-[0_6px_18px_rgba(111,186,223,0.28)]'
+            : 'text-[var(--muted)] hover:bg-white/10 hover:text-[var(--text)]',
+        ]"
+        :aria-current="isActive(item.to) ? 'page' : undefined"
+      >
+        {{ item.label }}
+      </NuxtLink>
+    </div>
+
+    <div
+      :class="[
+        'inline-flex items-center justify-center rounded-full px-2 py-1.5 transition-all duration-200',
+        aboutActive
+          ? 'border border-[var(--accent)]'
+          : 'border border-white/10',
+      ]"
+    >
+      <NuxtLink
+        :to="ISLAND_LINK.to"
+        :class="[
+          'relative inline-flex min-w-[88px] items-center justify-center rounded-full px-4 py-1.5 font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
+          isActive(ISLAND_LINK.to)
+            ? 'bg-white/90 text-[#081014]'
+            : 'text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)]',
+        ]"
+        :aria-current="isActive(ISLAND_LINK.to) ? 'page' : undefined"
+      >
+        {{ ISLAND_LINK.label }}
+      </NuxtLink>
+    </div>
   </nav>
 </template>

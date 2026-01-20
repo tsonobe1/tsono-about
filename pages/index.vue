@@ -4,14 +4,53 @@ import { formatDate } from '~/utils/formatDate'
 const toAbsolutePath = (path?: string | null) =>
   path ? (path.startsWith('/') ? path : `/${path}`) : '/'
 
-const { data: articles } = await useAsyncData('articles', () =>
+const { data: articlesData } = await useAsyncData('home-articles', () =>
   queryCollection('article')
     .select('path', 'title', 'date', 'summary', 'description', 'kind', 'tags')
     .order('date', 'DESC')
     .all(),
 )
 
-const list = computed(() => articles.value ?? [])
+const { data: diaryData } = await useAsyncData('home-diary', () =>
+  queryCollection('diary')
+    .select('path', 'title', 'date', 'category', 'description')
+    .order('date', 'DESC')
+    .all(),
+)
+
+type TimelinedEntry = {
+  type: 'article' | 'diary'
+  path?: string | null
+  date?: string | Date | null
+  title?: string | null
+  summary?: string | null
+  description?: string | null
+  kind?: string | null
+  category?: string | null
+}
+
+const timeline = computed<TimelinedEntry[]>(() => {
+  const articles = (articlesData.value ?? []).map((item) => ({
+    ...item,
+    type: 'article' as const,
+    summary: item.summary ?? item.description ?? '',
+  }))
+  const diaries = (diaryData.value ?? []).map((item) => ({
+    ...item,
+    type: 'diary' as const,
+    summary: item.description ?? '',
+  }))
+  return [...articles, ...diaries].sort((a, b) => {
+    const dateA = a.date ? new Date(a.date).getTime() : 0
+    const dateB = b.date ? new Date(b.date).getTime() : 0
+    return dateB - dateA
+  })
+})
+
+const typeLabel = (entry: TimelinedEntry) =>
+  entry.type === 'article'
+    ? (entry.kind ?? 'article')
+    : (entry.category ?? 'diary')
 </script>
 
 <template>
@@ -20,36 +59,35 @@ const list = computed(() => articles.value ?? [])
 
     <div class="grid gap-6">
       <NuxtLink
-        v-for="article in list"
-        :key="article.path"
-        :to="toAbsolutePath(article.path)"
+        v-for="entry in timeline"
+        :key="entry.path"
+        :to="toAbsolutePath(entry.path)"
         class="card group transition hover:border-[var(--accent)]"
       >
         <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2 text-xs tracking-widest">
+          <div class="flex items-center gap-3 text-xs tracking-widest">
             <span
               class="rounded border border-white/10 px-2 py-0.5 text-[var(--accent)]"
             >
-              {{ article.kind }}
+              {{ typeLabel(entry) }}
             </span>
-            <span class="muted" v-if="article.date">{{
-              formatDate(article.date)
-            }}</span>
+            <span class="muted">
+              {{ entry.date ? formatDate(entry.date) : '----/--/--' }}
+            </span>
           </div>
-          <h2 class="text-xl font-semibold text-[var(--text)]">
-            {{ article.title }}
-          </h2>
-          <p class="text-sm text-white/70" v-if="article.summary">
-            {{ article.summary }}
-          </p>
-          <div
-            class="flex flex-wrap gap-2 text-xs text-[var(--accent)]"
-            v-if="article.tags?.length"
+          <h2
+            class="text-xl font-semibold text-[var(--text)] transition group-hover:text-[var(--accent)]"
           >
-            <span v-for="tag in article.tags" :key="tag">#{{ tag }}</span>
-          </div>
+            {{ entry.title }}
+          </h2>
+          <p class="text-sm text-white/70 line-clamp-2" v-if="entry.summary">
+            {{ entry.summary }}
+          </p>
         </div>
       </NuxtLink>
+      <p v-if="!timeline.length" class="muted text-center text-sm">
+        まだ記事も日記もありません。
+      </p>
     </div>
   </div>
 </template>
