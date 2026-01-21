@@ -67,7 +67,7 @@ const typeLabel = (entry: TimelinedEntry) =>
         <div class="flex flex-col gap-2">
           <div class="flex items-center gap-3 text-xs tracking-widest">
             <span
-              class="rounded border border-white/10 px-2 py-0.5 text-[var(--accent)]"
+              class="rounded border border-[var(--border)] px-2 py-0.5 text-[var(--accent)]"
             >
               {{ typeLabel(entry) }}
             </span>

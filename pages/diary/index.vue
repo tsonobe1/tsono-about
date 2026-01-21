@@ -28,7 +28,7 @@ const entries = computed(() => data.value ?? [])
           <div class="flex items-center gap-3 text-xs tracking-widest">
             <span
               v-if="entry.category"
-              class="rounded border border-white/10 px-2 py-0.5 text-[var(--accent)]"
+              class="rounded border border-[var(--border)] px-2 py-0.5 text-[var(--accent)]"
             >
               {{ entry.category }}
             </span>

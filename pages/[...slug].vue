@@ -114,7 +114,7 @@ const introText = computed(() => {
         </h1>
         <div
           v-if="formattedDate || formattedUpdatedAt"
-          class="flex flex-wrap gap-4 text-xs uppercase tracking-widest text-white/60"
+          class="flex flex-wrap gap-4 text-xs uppercase tracking-widest text-[var(--muted)]"
         >
           <span v-if="formattedDate">公開日 {{ formattedDate }}</span>
           <span v-if="formattedUpdatedAt">更新日 {{ formattedUpdatedAt }}</span>

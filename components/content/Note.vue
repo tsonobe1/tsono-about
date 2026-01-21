@@ -4,7 +4,7 @@
       <span aria-hidden="true" class="note-icon">!</span>
       <span>Note</span>
     </p>
-    <div class="note-content text-white/80">
+    <div class="note-content text-[var(--muted)]">
       <slot />
     </div>
   </blockquote>

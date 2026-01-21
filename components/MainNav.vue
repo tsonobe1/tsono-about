@@ -51,7 +51,7 @@ const handlePrimaryClick = (
         'inline-flex flex-wrap items-center justify-center gap-2 rounded-full px-2 py-1.5 transition-all duration-200',
         primaryActive
           ? 'border border-[var(--accent)]'
-          : 'border border-white/10',
+          : 'border border-[var(--border)]',
       ]"
     >
       <NuxtLink
@@ -62,8 +62,8 @@ const handlePrimaryClick = (
         :class="[
           'relative inline-flex min-w-[88px] items-center justify-center rounded-full px-4 py-1.5 font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
           isActive(item.to)
-            ? 'bg-[var(--accent)] text-[#081014] shadow-[0_6px_18px_rgba(111,186,223,0.28)]'
-            : 'text-[var(--muted)] hover:bg-white/10 hover:text-[var(--text)]',
+            ? 'bg-[var(--accent)] text-white shadow-[0_6px_18px_rgba(47,109,246,0.28)]'
+            : 'text-[var(--muted)] hover:bg-[color-mix(in_srgb,var(--border)_25%,transparent)] hover:text-[var(--text)]',
         ]"
         :aria-current="isActive(item.to) ? 'page' : undefined"
       >
@@ -76,7 +76,7 @@ const handlePrimaryClick = (
         'inline-flex items-center justify-center rounded-full px-2 py-1.5 transition-all duration-200',
         aboutActive
           ? 'border border-[var(--accent)]'
-          : 'border border-white/10',
+          : 'border border-[var(--border)]',
       ]"
     >
       <NuxtLink
@@ -84,7 +84,7 @@ const handlePrimaryClick = (
         :class="[
           'relative inline-flex min-w-[88px] items-center justify-center rounded-full px-4 py-1.5 font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
           isActive(ISLAND_LINK.to)
-            ? 'bg-white/90 text-[#081014]'
+            ? 'bg-[var(--accent)] text-white shadow-[0_6px_18px_rgba(47,109,246,0.28)]'
             : 'text-[var(--muted)] hover:border-[var(--accent)] hover:text-[var(--accent)]',
         ]"
         :aria-current="isActive(ISLAND_LINK.to) ? 'page' : undefined"

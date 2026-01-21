@@ -48,7 +48,7 @@ onBeforeUnmount(() => {
       :src="props.src"
       :alt="props.alt"
       :title="props.title || undefined"
-      class="max-w-full max-h-[70vh] cursor-zoom-in rounded-xl border border-white/10 object-contain"
+      class="max-w-full max-h-[70vh] cursor-zoom-in rounded-xl border border-[color-mix(in_srgb,var(--border)_75%,transparent)] object-contain"
       loading="lazy"
       decoding="async"
       @click="openModal"
@@ -72,7 +72,7 @@ onBeforeUnmount(() => {
             :src="props.src"
             :alt="props.alt"
             :title="props.title || undefined"
-            class="max-h-[85vh] w-full rounded-2xl border border-white/20 object-contain shadow-2xl"
+            class="max-h-[85vh] w-full rounded-2xl border border-[color-mix(in_srgb,var(--border)_85%,transparent)] object-contain shadow-2xl"
             style="max-width: min(90vw, 1200px)"
             @click.stop
           />

@@ -9,7 +9,7 @@
 
       <div class="space-y-3 text-[var(--text)]">
         <p>test</p>
-        <ul class="list-disc space-y-1 pl-5 text-sm text-white/80">
+        <ul class="list-disc space-y-1 pl-5 text-sm text-[var(--muted)]">
           <li>
             <NuxtLink class="text-[var(--accent)]" to="/articles"
               >Articles</NuxtLink

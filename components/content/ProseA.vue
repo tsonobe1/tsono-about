@@ -180,7 +180,7 @@ function buildExternalInfo(
   <a
     v-else-if="isExternal && externalInfo"
     :href="href"
-    class="group block mt-3 rounded-2xl border border-white/10 bg-white/5 px-3 pt-2.5 pb-0 transition hover:border-[var(--accent)] hover:bg-[var(--accent)]/10"
+    class="group block mt-3 rounded-2xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_92%,var(--bg)_8%)] px-3 pt-2.5 pb-0 transition hover:border-[var(--accent)] hover:bg-[var(--accent)]/10"
     :target="isExternal ? '_blank' : undefined"
     :rel="isExternal ? 'noopener noreferrer' : undefined"
   >
@@ -188,7 +188,7 @@ function buildExternalInfo(
       class="flex items-center gap-1.5 text-sm font-medium leading-tight text-[var(--text)]"
     >
       <span
-        class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--accent)]/15 text-[var(--accent)] transition group-hover:bg-[var(--accent)] group-hover:text-white"
+        class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--accent)]/15 text-[var(--accent)] transition group-hover:bg-[var(--accent)] group-hover:text-[var(--surface)]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -212,7 +212,7 @@ function buildExternalInfo(
       </span>
     </div>
     <p
-      class="mt-0 text-[0.65rem] text-white/70 transition group-hover:text-white"
+      class="mt-0 text-[0.65rem] text-[var(--muted)] transition group-hover:text-[var(--surface)]"
     >
       {{ externalInfo.hostname }}
     </p>

@@ -52,7 +52,7 @@ const onImageError = (event: Event) => {
     <MainNav />
     <section class="flex flex-col gap-8">
       <div
-        class="flex flex-wrap items-center gap-4 border-b border-white/10 px-2 pb-4"
+        class="flex flex-wrap items-center gap-4 border-b border-[var(--border)] px-2 pb-4"
       >
         <span class="text-[var(--accent)]" aria-hidden="true">
           <svg
@@ -79,8 +79,8 @@ const onImageError = (event: Event) => {
             class="rounded-full border px-4 py-1 text-sm transition"
             :class="
               selected === type.key
-                ? 'border-[var(--accent)] bg-[var(--accent)] text-[#081014]'
-                : 'border-white/10 text-[var(--text)] hover:border-[var(--accent)] hover:text-[var(--accent)]'
+                ? 'border-[var(--accent)] bg-[var(--accent)] text-white'
+                : 'border-[var(--border)] text-[var(--text)] hover:border-[var(--accent)] hover:text-[var(--accent)]'
             "
           >
             {{ type.label }}
@@ -112,7 +112,7 @@ const onImageError = (event: Event) => {
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100"
             />
           </div>
-          <div class="space-y-2 border-t border-white/5 px-5 py-4">
+          <div class="space-y-2 border-t border-[color-mix(in_srgb,var(--border)_70%,transparent)] px-5 py-4">
             <div class="flex items-center justify-between gap-2">
               <p class="text-xs uppercase tracking-wide text-[var(--accent)]">
                 {{ item.type }}
