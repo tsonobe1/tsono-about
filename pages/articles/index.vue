@@ -99,22 +99,6 @@ const formatMonthDay = (value?: string | Date) => {
         <div
           class="article-panel rounded-2xl border border-white/30 p-8 sm:px-10 sm:py-8"
         >
-          <figure
-            v-if="seasonalAccent"
-            class="mx-auto mb-6 flex w-full max-w-[260px] flex-col items-center gap-2 text-center text-[var(--muted)]"
-            aria-hidden="true"
-          >
-            <img
-              :src="seasonalAccent.src"
-              :alt="seasonalAccent.label"
-              class="w-full rounded-3xl"
-              loading="lazy"
-              decoding="async"
-            />
-            <figcaption class="text-[11px] uppercase tracking-[0.4em]">
-              {{ seasonalAccent.label }}
-            </figcaption>
-          </figure>
           <section
             v-for="(group, groupIndex) in groupedArticles"
             :key="group.key"
@@ -126,7 +110,7 @@ const formatMonthDay = (value?: string | Date) => {
             <p class="text-xs uppercase tracking-[0.5em] text-[var(--muted)]">
               {{ group.label }}
             </p>
-            <div class="mt-4 flex flex-col gap-5">
+            <div class="mt-1.5 flex flex-col gap-3.5">
               <NuxtLink
                 v-for="(article, articleIndex) in group.items"
                 :key="article.path"
@@ -145,7 +129,7 @@ const formatMonthDay = (value?: string | Date) => {
                     </span>
                   </div>
                   <h2
-                    class="text-base font-normal tracking-[0.02em] leading-[1.55] text-[#2a2a2a]"
+                    class="text-lg font-normal tracking-[0.02em] leading-[1.55] text-[#2a2a2a]"
                   >
                     {{ article.title }}
                   </h2>
