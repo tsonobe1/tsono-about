@@ -64,26 +64,33 @@ const formatMonthDay = (value?: string | Date) => {
         <div class="w-full" />
       </aside>
       <div class="w-full lg:flex-none lg:max-w-md lg:self-start">
-        <div class="flex w-full flex-col gap-12">
+        <div
+          class="article-panel rounded-2xl border border-white/30 p-8 sm:px-10 sm:py-8"
+        >
           <section
-            v-for="group in groupedEntries"
+            v-for="(group, groupIndex) in groupedEntries"
             :key="group.key"
-            class="flex flex-col gap-3"
+            :class="[
+              'flex flex-col gap-3 text-[var(--text)]',
+              groupIndex === 0 ? '' : 'mt-24',
+            ]"
           >
             <p class="text-xs uppercase tracking-[0.5em] text-[var(--muted)]">
               {{ group.label }}
             </p>
-            <div class="flex flex-col gap-3">
+            <div class="mt-4 flex flex-col gap-5">
               <NuxtLink
-                v-for="(entry, index) in group.items"
+                v-for="(entry, entryIndex) in group.items"
                 :key="entry.path"
                 :to="toAbsolutePath(entry.path)"
-                class="group block pb-3 pt-1 transition hover:translate-x-1"
-                :class="index === 0 ? 'pt-0.5' : ''"
+                :class="[
+                  'group block pt-1 transition hover:translate-x-1',
+                  entryIndex === 0 ? 'mt-8' : 'mt-0',
+                ]"
               >
                 <div class="flex flex-col gap-1.5">
                   <div
-                    class="text-[11px] tracking-[0.3em] text-[color-mix(in_srgb,var(--text)_40%,transparent)]"
+                    class="text-[11px] tracking-[0.25em] text-[color-mix(in_srgb,var(--text)_40%,transparent)]"
                   >
                     <span>
                       {{
@@ -92,7 +99,7 @@ const formatMonthDay = (value?: string | Date) => {
                     </span>
                   </div>
                   <h2
-                    class="text-base font-semibold leading-[1.4] text-[var(--text)]"
+                    class="text-base font-normal tracking-[0.02em] leading-[1.55] text-[#2a2a2a]"
                   >
                     {{ entry.title }}
                   </h2>

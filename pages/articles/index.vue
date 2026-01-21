@@ -18,7 +18,9 @@ type ArticleEntry = {
   kind?: string | null
 }
 
-const articles = computed<ArticleEntry[]>(() => (data.value ?? []) as ArticleEntry[])
+const articles = computed<ArticleEntry[]>(
+  () => (data.value ?? []) as ArticleEntry[],
+)
 
 const groupedArticles = computed(() => {
   const groups: Record<
@@ -46,6 +48,36 @@ const groupedArticles = computed(() => {
   return orderedKeys.map((key) => groups[key])
 })
 
+const seasonalAccent = computed(() => {
+  const month = new Date().getMonth()
+  if (month >= 2 && month <= 4) {
+    return {
+      key: 'spring',
+      label: 'spring light',
+      src: '/images/accents/season-spring.jpg',
+    }
+  }
+  if (month >= 5 && month <= 7) {
+    return {
+      key: 'summer',
+      label: 'summer light',
+      src: '/images/accents/season-summer.jpg',
+    }
+  }
+  if (month >= 8 && month <= 10) {
+    return {
+      key: 'autumn',
+      label: 'autumn light',
+      src: '/images/accents/season-autumn.jpg',
+    }
+  }
+  return {
+    key: 'winter',
+    label: 'winter light',
+    src: '/images/accents/season-winter.jpg',
+  }
+})
+
 const formatMonthDay = (value?: string | Date) => {
   const formatted = formatDate(value)
   return formatted ? formatted.slice(5) : ''
@@ -64,33 +96,56 @@ const formatMonthDay = (value?: string | Date) => {
         <div class="w-full" />
       </aside>
       <div class="w-full lg:flex-none lg:max-w-md lg:self-start">
-        <div class="flex w-full flex-col gap-12">
+        <div
+          class="article-panel rounded-2xl border border-white/30 p-8 sm:px-10 sm:py-8"
+        >
+          <figure
+            v-if="seasonalAccent"
+            class="mx-auto mb-6 flex w-full max-w-[260px] flex-col items-center gap-2 text-center text-[var(--muted)]"
+            aria-hidden="true"
+          >
+            <img
+              :src="seasonalAccent.src"
+              :alt="seasonalAccent.label"
+              class="w-full rounded-3xl"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="text-[11px] uppercase tracking-[0.4em]">
+              {{ seasonalAccent.label }}
+            </figcaption>
+          </figure>
           <section
-            v-for="group in groupedArticles"
+            v-for="(group, groupIndex) in groupedArticles"
             :key="group.key"
-            class="flex flex-col gap-3"
+            :class="[
+              'flex flex-col gap-3 text-[var(--text)]',
+              groupIndex === 0 ? '' : 'mt-24',
+            ]"
           >
             <p class="text-xs uppercase tracking-[0.5em] text-[var(--muted)]">
               {{ group.label }}
             </p>
-            <div class="flex flex-col gap-3">
+            <div class="mt-4 flex flex-col gap-5">
               <NuxtLink
-                v-for="(article, index) in group.items"
+                v-for="(article, articleIndex) in group.items"
                 :key="article.path"
                 :to="toAbsolutePath(article.path)"
-                class="group block pb-3 pt-1 transition hover:translate-x-1"
-                :class="index === 0 ? 'pt-0.5' : ''"
+                :class="[
+                  'group block pt-1 transition hover:translate-x-1',
+                  articleIndex === 0 ? 'mt-8' : 'mt-0',
+                ]"
               >
                 <div class="flex flex-col gap-1.5">
                   <div
-                    class="text-[11px] tracking-[0.3em] text-[color-mix(in_srgb,var(--text)_40%,transparent)]"
+                    class="text-[11px] tracking-[0.25em] text-[color-mix(in_srgb,var(--text)_40%,transparent)]"
                   >
                     <span v-if="article.date">
                       {{ formatMonthDay(article.date) }}
                     </span>
                   </div>
                   <h2
-                    class="text-base font-semibold leading-[1.4] text-[var(--text)]"
+                    class="text-base font-normal tracking-[0.02em] leading-[1.55] text-[#2a2a2a]"
                   >
                     {{ article.title }}
                   </h2>

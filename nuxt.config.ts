@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          theme: 'github-dark-high-contrast',
+          theme: 'github-light',
         },
       },
     },

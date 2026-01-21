@@ -1,10 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Code+Pro:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --bg: #f4f6fb;
+    --bg: #e4e2dd;
     --surface: #ffffff;
     --text: #1c2234;
     --muted: #5f6675;
@@ -25,9 +27,19 @@
     color: var(--text);
     line-height: 1.65;
     font-family:
-      -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
-      'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Helvetica Neue', Arial,
-      sans-serif;
+      'Noto Serif', 'Noto Serif JP', 'Shippori Mincho', 'Hiragino Mincho ProN',
+      'Yu Mincho', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', serif;
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family:
+      'Source Code Pro', 'IBM Plex Mono', 'SF Mono', 'ui-monospace',
+      'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
   }
 
   a {
@@ -39,6 +51,10 @@
     color: color-mix(in srgb, var(--accent) 80%, #0a1f5f 20%);
     text-decoration-color: currentColor;
     text-shadow: var(--glow);
+  }
+
+  strong {
+    font-weight: 550;
   }
 }
 
@@ -60,6 +76,15 @@
 
   .muted {
     color: var(--muted);
+  }
+
+  .article-panel {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.75),
+      rgba(255, 255, 255, 0.65)
+    );
+    backdrop-filter: blur(2px);
   }
 
   .btn {
@@ -84,13 +109,13 @@
     box-shadow: 0 0 32px rgba(111, 186, 223, 0.3);
   }
 
-  .content h1,
-  .content h2,
-  .content h3,
-  .content h4,
-  .content h5,
-  .content h6 {
-    font-weight: 600;
+ .content h1,
+ .content h2,
+ .content h3,
+ .content h4,
+ .content h5,
+ .content h6 {
+    font-weight: 500;
     line-height: 1.35;
     scroll-margin-top: 96px;
     color: inherit;
@@ -214,15 +239,24 @@
   .content :not(pre) > code {
     background: rgba(255, 255, 255, 0.08);
     padding: 2px 6px;
+    font-family:
+      'Source Code Pro', 'IBM Plex Mono', 'SF Mono', 'ui-monospace',
+      'SFMono-Regular', 'Menlo', 'Consolas',
+      'Liberation Mono', monospace;
   }
 
   .content pre {
     margin: var(--s3) 0;
     padding: var(--s3);
-    background: #0f1420;
-    border: 1px solid var(--border);
+    background: #f6f4ef;
+    border: none;
     border-radius: var(--radius);
     overflow-x: auto;
+    font-family:
+      'Source Code Pro', 'IBM Plex Mono', 'SF Mono', 'ui-monospace',
+      'SFMono-Regular', 'Menlo', 'Consolas',
+      'Liberation Mono', monospace;
+    font-size: 0.95em;
   }
 
   .content blockquote {
