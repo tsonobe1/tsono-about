@@ -6,13 +6,17 @@
 
 @layer base {
   :root {
-    --bg: #e0ded8;
-    --surface: #f7f4ef;
-    --text: #28241d;
-    --muted: #6b685f;
-    --border: #c9c3ba;
-    --accent: #6f7c73;
-    --accent-weak: rgba(111, 124, 115, 0.18);
+    --bg: #f3f0e9;
+    --panel: #fbfaf6;
+    --text: #2b2a27;
+    --muted: #6f6b63;
+    --line: #e6dfd3;
+    --wood: #c9a57a;
+    --wood-dark: #a98255;
+    --accent: #5f7f91;
+    --surface: var(--panel);
+    --border: var(--line);
+    --accent-weak: rgba(95, 127, 145, 0.18);
     --radius: 12px;
     --s1: 8px;
     --s2: 16px;
@@ -20,6 +24,12 @@
     --s4: 32px;
     --s5: 48px;
     --glow: 0 0 24px rgba(47, 109, 246, 0.2);
+  }
+
+  .wood-band {
+    border-top: 1px solid color-mix(in srgb, var(--wood-dark) 40%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--wood) 40%, transparent);
+    background: linear-gradient(90deg, rgba(201, 165, 122, 0.08), rgba(201, 165, 122, 0));
   }
 
 
@@ -61,8 +71,8 @@
 
 @layer components {
   .card {
-    background: color-mix(in srgb, var(--surface) 92%, var(--bg) 8%);
-    border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+    background: color-mix(in srgb, var(--panel) 92%, transparent);
+    border: 1px solid color-mix(in srgb, var(--line) 55%, transparent);
     border-radius: var(--radius);
     padding: var(--s3);
     backdrop-filter: blur(6px);
