@@ -11,36 +11,97 @@ const { data } = await useAsyncData('diary-page', () =>
     .all(),
 )
 
-const entries = computed(() => data.value ?? [])
+type DiaryEntry = {
+  path?: string | null
+  title?: string | null
+  date?: string | Date | null
+  category?: string | null
+}
+
+const entries = computed<DiaryEntry[]>(() => (data.value ?? []) as DiaryEntry[])
+
+const groupedEntries = computed(() => {
+  const groups: Record<
+    string,
+    { key: string; label: string; items: DiaryEntry[] }
+  > = {}
+  const orderedKeys: string[] = []
+
+  for (const item of entries.value) {
+    const hasDate = !!item.date
+    const yearKey = hasDate
+      ? String(new Date(item.date as string | number | Date).getFullYear())
+      : 'no-date'
+    if (!groups[yearKey]) {
+      groups[yearKey] = {
+        key: yearKey,
+        label: hasDate ? `${yearKey}` : 'Other',
+        items: [],
+      }
+      orderedKeys.push(yearKey)
+    }
+    groups[yearKey].items.push(item)
+  }
+
+  return orderedKeys.map((key) => groups[key])
+})
+
+const formatMonthDay = (value?: string | Date) => {
+  const formatted = formatDate(value)
+  return formatted ? formatted.slice(5) : ''
+}
 </script>
 
 <template>
-  <div class="mx-auto flex min-h-screen max-w-4xl flex-col gap-10 px-6 py-16">
+  <div
+    class="mx-auto flex min-h-screen max-w-6xl flex-col gap-10 px-6 py-16 lg:ml-40 lg:mr-6"
+  >
     <MainNav />
-    <div class="grid gap-6">
-      <NuxtLink
-        v-for="entry in entries"
-        :key="entry.path"
-        :to="toAbsolutePath(entry.path)"
-        class="card transition"
-      >
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-3 text-xs tracking-widest">
-            <span
-              v-if="entry.category"
-              class="rounded border border-[var(--border)] px-2 py-0.5 text-[var(--accent)]"
-            >
-              {{ entry.category }}
-            </span>
-            <span class="muted">
-              {{ entry.date ? formatDate(entry.date) : '----/--/--' }}
-            </span>
-          </div>
-          <h2 class="text-xl font-semibold text-[var(--text)]">
-            {{ entry.title }}
-          </h2>
+    <div
+      class="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-12 xl:gap-20"
+    >
+      <aside class="hidden lg:flex lg:flex-[1.8]" aria-hidden="true">
+        <div class="w-full" />
+      </aside>
+      <div class="w-full lg:flex-none lg:max-w-md lg:self-start">
+        <div class="flex w-full flex-col gap-12">
+          <section
+            v-for="group in groupedEntries"
+            :key="group.key"
+            class="flex flex-col gap-3"
+          >
+            <p class="text-xs uppercase tracking-[0.5em] text-[var(--muted)]">
+              {{ group.label }}
+            </p>
+            <div class="flex flex-col gap-3">
+              <NuxtLink
+                v-for="(entry, index) in group.items"
+                :key="entry.path"
+                :to="toAbsolutePath(entry.path)"
+                class="group block pb-3 pt-1 transition hover:translate-x-1"
+                :class="index === 0 ? 'pt-0.5' : ''"
+              >
+                <div class="flex flex-col gap-1.5">
+                  <div
+                    class="text-[11px] tracking-[0.3em] text-[color-mix(in_srgb,var(--text)_40%,transparent)]"
+                  >
+                    <span>
+                      {{
+                        entry.date ? formatMonthDay(entry.date) : '--/--'
+                      }}
+                    </span>
+                  </div>
+                  <h2
+                    class="text-base font-semibold leading-[1.4] text-[var(--text)]"
+                  >
+                    {{ entry.title }}
+                  </h2>
+                </div>
+              </NuxtLink>
+            </div>
+          </section>
         </div>
-      </NuxtLink>
+      </div>
     </div>
   </div>
 </template>
