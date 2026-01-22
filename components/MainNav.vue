@@ -37,7 +37,7 @@ const handleLinkClick = (
     class="mx-auto mt-2 mb-6 flex w-full max-w-4xl flex-wrap items-center justify-center px-8 text-center text-[0.82rem] uppercase tracking-[0.35em]"
   >
     <div
-      class="flex flex-wrap items-center justify-center gap-8 text-[color-mix(in_srgb,var(--text)_70%,transparent)]"
+      class="flex flex-wrap items-center justify-center gap-8 text-[color-mix(in_srgb,var(--text)_75%,transparent)]"
     >
       <NuxtLink
         v-for="item in NAV_LINKS"
@@ -47,8 +47,8 @@ const handleLinkClick = (
         :class="[
           'relative border-b-2 border-transparent pb-1 font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
           isActive(item.to)
-            ? 'text-[var(--text)] border-[color-mix(in_srgb,var(--text)_80%,transparent)]'
-            : 'text-[color-mix(in_srgb,var(--text)_55%,transparent)] hover:text-[var(--text)]',
+            ? 'text-[var(--text)] border-[color-mix(in_srgb,var(--text)_85%,transparent)]'
+            : 'text-[color-mix(in_srgb,var(--text)_70%,transparent)] hover:text-[var(--text)]',
         ]"
         :aria-current="isActive(item.to) ? 'page' : undefined"
       >

@@ -74,7 +74,7 @@ const formatMonthDay = (value?: string | Date) => {
             ]"
           >
             <p
-              class="text-xs uppercase tracking-[0.5em] text-[color-mix(in_srgb,var(--text)_65%,transparent)]"
+              class="text-xs uppercase tracking-[0.5em] text-[color-mix(in_srgb,var(--text)_75%,transparent)]"
             >
               {{ group.label }}
             </p>
@@ -90,7 +90,7 @@ const formatMonthDay = (value?: string | Date) => {
               >
                 <div class="flex flex-col gap-1.5">
                   <div
-                    class="text-[11px] tracking-[0.25em] text-[color-mix(in_srgb,var(--text)_60%,transparent)]"
+                    class="text-[11px] tracking-[0.25em] text-[color-mix(in_srgb,var(--text)_70%,transparent)]"
                   >
                     <span>
                       {{
