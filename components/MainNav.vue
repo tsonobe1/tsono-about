@@ -45,10 +45,10 @@ const handleLinkClick = (
         :to="item.to"
         @click="(event) => handleLinkClick(event, item)"
         :class="[
-          'relative border-b-2 border-transparent pb-1 font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
+          'group relative pb-1 font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-center after:scale-x-0 after:bg-current after:transition-transform after:duration-200 after:content-[\'\']',
           isActive(item.to)
-            ? 'text-[var(--text)] border-[color-mix(in_srgb,var(--text)_85%,transparent)]'
-            : 'text-[color-mix(in_srgb,var(--text)_70%,transparent)] hover:text-[var(--text)]',
+            ? 'text-[var(--text)] after:scale-x-100'
+            : 'text-[color-mix(in_srgb,var(--text)_70%,transparent)] hover:text-[var(--text)] hover:after:scale-x-100 active:text-[var(--text)] active:after:scale-x-100',
         ]"
         :aria-current="isActive(item.to) ? 'page' : undefined"
       >
