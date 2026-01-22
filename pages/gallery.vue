@@ -48,8 +48,7 @@ const onImageError = (event: Event) => {
 </script>
 
 <template>
-  <div class="mx-auto flex min-h-screen max-w-4xl flex-col gap-8 px-6 py-16">
-    <MainNav />
+  <div class="mx-auto flex min-h-screen max-w-4xl flex-col gap-8 px-6 pb-16">
     <section class="flex flex-col gap-8">
       <div
         class="flex flex-wrap items-center gap-4 border-b border-[var(--border)] px-2 pb-4"

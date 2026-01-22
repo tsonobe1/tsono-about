@@ -7,9 +7,7 @@ const { data: doc } = await useAsyncData('about-doc', () =>
 </script>
 
 <template>
-  <div class="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-6 py-16">
-    <MainNav />
-
+  <div class="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 px-6 pb-16">
     <article v-if="doc" class="flex flex-col gap-6">
       <div class="space-y-2">
         <h2 class="text-3xl font-semibold text-[var(--text)]">

@@ -1,7 +1,5 @@
 <template>
-  <div class="mx-auto flex min-h-screen max-w-3xl flex-col gap-10 px-6 py-16">
-    <MainNav />
-
+  <div class="mx-auto flex min-h-screen max-w-3xl flex-col gap-10 px-6 pb-16">
     <section class="card space-y-4">
       <header class="space-y-2">
         <h1 class="text-3xl font-semibold text-[var(--text)]">私について</h1>

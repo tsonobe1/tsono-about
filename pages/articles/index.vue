@@ -85,8 +85,7 @@ const formatMonthDay = (value?: string | Date) => {
 </script>
 
 <template>
-  <div class="mx-auto flex min-h-screen max-w-6xl flex-col gap-10 px-6 py-16">
-    <MainNav />
+  <div class="mx-auto flex min-h-screen max-w-6xl flex-col gap-10 px-6 pb-16">
     <div
       class="flex flex-col gap-10 lg:ml-40 lg:mr-6 lg:flex-row lg:items-start lg:gap-12 xl:gap-20"
     >
