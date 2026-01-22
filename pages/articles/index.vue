@@ -85,12 +85,10 @@ const formatMonthDay = (value?: string | Date) => {
 </script>
 
 <template>
-  <div
-    class="mx-auto flex min-h-screen max-w-6xl flex-col gap-10 px-6 py-16 lg:ml-40 lg:mr-6"
-  >
+  <div class="mx-auto flex min-h-screen max-w-6xl flex-col gap-10 px-6 py-16">
     <MainNav />
     <div
-      class="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-12 xl:gap-20"
+      class="flex flex-col gap-10 lg:ml-40 lg:mr-6 lg:flex-row lg:items-start lg:gap-12 xl:gap-20"
     >
       <aside class="hidden lg:flex lg:flex-[1.8]" aria-hidden="true">
         <div class="w-full" />
@@ -107,7 +105,9 @@ const formatMonthDay = (value?: string | Date) => {
               groupIndex === 0 ? '' : 'mt-24',
             ]"
           >
-            <p class="text-xs uppercase tracking-[0.5em] text-[var(--muted)]">
+            <p
+              class="text-xs uppercase tracking-[0.5em] text-[color-mix(in_srgb,var(--text)_65%,transparent)]"
+            >
               {{ group.label }}
             </p>
             <div class="mt-1.5 flex flex-col gap-3.5">
@@ -122,7 +122,7 @@ const formatMonthDay = (value?: string | Date) => {
               >
                 <div class="flex flex-col gap-1.5">
                   <div
-                    class="text-[11px] tracking-[0.25em] text-[color-mix(in_srgb,var(--text)_40%,transparent)]"
+                    class="text-[11px] tracking-[0.25em] text-[color-mix(in_srgb,var(--text)_60%,transparent)]"
                   >
                     <span v-if="article.date">
                       {{ formatMonthDay(article.date) }}

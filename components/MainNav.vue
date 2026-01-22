@@ -6,6 +6,7 @@ const PRIMARY_LINKS = [
 ] as const
 
 const ISLAND_LINK = { key: 'about', label: 'About', to: '/about' } as const
+const NAV_LINKS = [...PRIMARY_LINKS, ISLAND_LINK] as const
 
 const route = useRoute()
 const router = useRouter()
@@ -20,9 +21,9 @@ const isActive = (to: string) => {
 const shouldReturnHome = (key: string) =>
   (key === 'articles' || key === 'diary') && isActive(`/${key}`)
 
-const handlePrimaryClick = (
+const handleLinkClick = (
   event: MouseEvent,
-  item: (typeof PRIMARY_LINKS)[number],
+  item: (typeof PRIMARY_LINKS)[number] | typeof ISLAND_LINK,
 ) => {
   if (shouldReturnHome(item.key)) {
     event.preventDefault()
@@ -33,39 +34,26 @@ const handlePrimaryClick = (
 
 <template>
   <nav
-    class="mx-auto mt-2 mb-6 flex max-w-4xl flex-wrap items-center justify-between gap-3 px-4 text-[0.72rem] uppercase tracking-[0.35em]"
+    class="mx-auto mt-2 mb-6 flex w-full max-w-4xl flex-wrap items-center justify-center px-8 text-center text-[0.82rem] uppercase tracking-[0.35em]"
   >
     <div
-      class="flex flex-wrap items-center gap-4 text-[color-mix(in_srgb,var(--text)_60%,transparent)]"
+      class="flex flex-wrap items-center justify-center gap-8 text-[color-mix(in_srgb,var(--text)_70%,transparent)]"
     >
       <NuxtLink
-        v-for="item in PRIMARY_LINKS"
+        v-for="item in NAV_LINKS"
         :key="item.key"
         :to="item.to"
-        @click="(event) => handlePrimaryClick(event, item)"
+        @click="(event) => handleLinkClick(event, item)"
         :class="[
-          'border-b border-transparent pb-1 font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
+          'relative border-b-2 border-transparent pb-1 font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
           isActive(item.to)
-            ? 'text-[var(--text)] border-b border-[color-mix(in_srgb,var(--text)_65%,transparent)]'
-            : 'text-[color-mix(in_srgb,var(--text)_40%,transparent)] hover:text-[var(--text)]',
+            ? 'text-[var(--text)] border-[color-mix(in_srgb,var(--text)_80%,transparent)]'
+            : 'text-[color-mix(in_srgb,var(--text)_55%,transparent)] hover:text-[var(--text)]',
         ]"
         :aria-current="isActive(item.to) ? 'page' : undefined"
       >
         {{ item.label }}
       </NuxtLink>
     </div>
-
-    <NuxtLink
-      :to="ISLAND_LINK.to"
-      :class="[
-        'border-b border-transparent pb-1 font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
-        isActive(ISLAND_LINK.to)
-          ? 'text-[var(--text)] border-b border-[color-mix(in_srgb,var(--text)_65%,transparent)]'
-          : 'text-[color-mix(in_srgb,var(--text)_40%,transparent)] hover:text-[var(--text)]',
-      ]"
-      :aria-current="isActive(ISLAND_LINK.to) ? 'page' : undefined"
-    >
-      {{ ISLAND_LINK.label }}
-    </NuxtLink>
   </nav>
 </template>
