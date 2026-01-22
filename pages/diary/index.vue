@@ -73,11 +73,11 @@ const formatMonthDay = (value?: string | Date) => {
             ]"
           >
             <p
-              class="text-xs uppercase tracking-[0.5em] text-[color-mix(in_srgb,var(--text)_75%,transparent)]"
+              class="text-[0.7rem] font-semibold uppercase tracking-[0.45em] text-[color-mix(in_srgb,var(--text)_55%,transparent)]"
             >
               {{ group.label }}
             </p>
-            <div class="mt-4 flex flex-col gap-5">
+            <div class="mt-4 flex flex-col gap-7">
               <NuxtLink
                 v-for="(entry, entryIndex) in group.items"
                 :key="entry.path"
@@ -87,9 +87,9 @@ const formatMonthDay = (value?: string | Date) => {
                   entryIndex === 0 ? 'mt-8' : 'mt-0',
                 ]"
               >
-                <div class="flex flex-col gap-1.5">
+                <div class="flex flex-col gap-2.5">
                   <div
-                    class="text-[11px] tracking-[0.25em] text-[color-mix(in_srgb,var(--text)_70%,transparent)]"
+                    class="text-[10px] tracking-[0.22em] text-[color-mix(in_srgb,var(--text)_55%,transparent)]"
                   >
                     <span>
                       {{
@@ -98,7 +98,7 @@ const formatMonthDay = (value?: string | Date) => {
                     </span>
                   </div>
                   <h2
-                    class="text-base font-normal tracking-[0.02em] leading-[1.55] text-[#2a2a2a]"
+                    class="text-base font-[460] tracking-[0.02em] leading-[1.55] text-[#2a2a2a]"
                   >
                     {{ entry.title }}
                   </h2>

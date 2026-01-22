@@ -124,7 +124,7 @@ const handleLinkClick = (
       class="relative flex flex-wrap items-center justify-center gap-8 text-[color-mix(in_srgb,var(--text)_75%,transparent)]"
     >
       <span
-        class="pointer-events-none absolute bottom-0 left-0 h-[2px] translate-y-1 rounded-2xl bg-[var(--text)] opacity-0 transition-[opacity,transform,width] duration-300 ease-out"
+        class="pointer-events-none absolute bottom-0 left-0 h-[3px] translate-y-1 rounded-2xl bg-[var(--text)] opacity-0 transition-[opacity,transform,width] duration-300 ease-out"
         :style="indicatorStyle"
         aria-hidden="true"
       />
@@ -141,7 +141,7 @@ const handleLinkClick = (
             'pb-1 font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
             isActive(item.to)
               ? 'text-[var(--text)]'
-              : 'text-[color-mix(in_srgb,var(--text)_70%,transparent)] hover:text-[var(--text)]',
+              : 'text-[color-mix(in_srgb,var(--text)_65%,transparent)] hover:text-[var(--text)]',
           ]"
           :aria-current="isActive(item.to) ? 'page' : undefined"
         >
