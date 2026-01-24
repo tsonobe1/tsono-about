@@ -18,7 +18,6 @@ const ISLAND_LINK = { key: 'about', label: 'About', to: '/about' } as const
 const NAV_LINKS = [...PRIMARY_LINKS, ISLAND_LINK] as const
 
 const route = useRoute()
-const router = useRouter()
 const navContainerRef = ref<HTMLElement | null>(null)
 const indicatorStyle = ref({
   transform: 'translateX(0)',
@@ -33,9 +32,6 @@ const isActive = (to: string) => {
   }
   return route.path === to || route.path.startsWith(`${to}/`)
 }
-
-const shouldReturnHome = (key: string) =>
-  (key === 'articles' || key === 'diary') && isActive(`/${key}`)
 
 const activeKey = computed(
   () => NAV_LINKS.find((link) => isActive(link.to))?.key ?? null,
@@ -104,14 +100,9 @@ watch(activeKey, async (newKey) => {
 })
 
 const handleLinkClick = (
-  event: MouseEvent,
   item: (typeof PRIMARY_LINKS)[number] | typeof ISLAND_LINK,
 ) => {
   updateIndicator(item.key)
-  if (shouldReturnHome(item.key)) {
-    event.preventDefault()
-    router.push('/')
-  }
 }
 </script>
 
@@ -136,7 +127,6 @@ const handleLinkClick = (
       >
         <NuxtLink
           :to="item.to"
-          @click="(event) => handleLinkClick(event, item)"
           :class="[
             'pb-1 font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent)]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
             isActive(item.to)
@@ -144,6 +134,7 @@ const handleLinkClick = (
               : 'text-[color-mix(in_srgb,var(--text)_65%,transparent)] hover:text-[var(--text)]',
           ]"
           :aria-current="isActive(item.to) ? 'page' : undefined"
+          @click="() => handleLinkClick(item)"
         >
           {{ item.label }}
         </NuxtLink>

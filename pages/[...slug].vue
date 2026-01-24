@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import type { Collections } from '@nuxt/content'
+import type { Collections, ContentNavigationItem } from '@nuxt/content'
+import { setResponseStatus } from 'h3'
 import { formatDate } from '~/utils/formatDate'
+import { buildContentMeta, FALLBACK_SITE_TITLE } from '~/utils/contentMeta'
 
 const route = useRoute()
 
@@ -28,6 +30,9 @@ const collectionKey = computed<keyof Collections | null>(() => {
   return null
 })
 
+const shouldSurround =
+  computed(() => collectionKey.value === 'article' || collectionKey.value === 'diary')
+
 const contentDocKey = computed(
   () => `content-doc:${collectionKey.value ?? 'none'}:${currentPath.value}`,
 )
@@ -43,6 +48,69 @@ const { data: doc } = await useAsyncData(
   },
   { watch: [currentPath, collectionKey] },
 )
+
+if (import.meta.server) {
+  const event = useRequestEvent()
+  if (event && !doc.value) {
+    setResponseStatus(event, 404, 'Not Found')
+  }
+}
+
+type SurroundingItem =
+  | (ContentNavigationItem & { date?: string | Date | null })
+  | null
+
+const surroundingsCacheKey = computed(
+  () =>
+    `content-surroundings:${collectionKey.value ?? 'none'}:${currentPath.value}`,
+)
+
+const { data: surroundings } = await useAsyncData<
+  (SurroundingItem | null)[] | null
+>(
+  () => surroundingsCacheKey.value,
+  async () => {
+    if (!shouldSurround.value || !collectionKey.value) {
+      return [null, null]
+    }
+    const items = await queryCollectionItemSurroundings(
+      collectionKey.value,
+      currentPath.value,
+      {
+        before: 1,
+        after: 1,
+        fields: ['date'],
+      },
+    )
+      .order('date', 'DESC')
+    return items as (SurroundingItem | null)[]
+  },
+  { watch: [collectionKey, currentPath, shouldSurround] },
+)
+
+const previousLink = computed<SurroundingItem>(() => {
+  const raw = surroundings.value ?? []
+  return (raw[0] as SurroundingItem) || null
+})
+const nextLink = computed<SurroundingItem>(() => {
+  const raw = surroundings.value ?? []
+  return (raw[1] as SurroundingItem) || null
+})
+const hasSurroundingLinks = computed(
+  () => !!previousLink.value || !!nextLink.value,
+)
+
+const surroundingLabels = computed(() => ({
+  prev: '←',
+  next: '→',
+}))
+
+const formatSurroundingDate = (item: SurroundingItem) => {
+  if (!item?.date) {
+    return ''
+  }
+  return formatDate(item.date)
+}
 
 const backLink = computed(() => {
   if (collectionKey.value === 'article') {
@@ -80,20 +148,49 @@ const formattedUpdatedAt = computed(() => {
 
 const introText = computed(() => {
   const value = doc.value as null | {
-    summary?: string | null
     description?: string | null
   }
-  if (value && typeof value === 'object') {
-    if ('summary' in value && value.summary) {
-      return value.summary
-    }
-    const allowDescription =
-      collectionKey.value === 'diary' || collectionKey.value === 'career'
-    if (allowDescription && 'description' in value && value.description) {
-      return value.description
-    }
+  if (
+    value &&
+    typeof value === 'object' &&
+    'description' in value &&
+    value.description
+  ) {
+    return value.description
   }
   return ''
+})
+
+const runtimeConfig = useRuntimeConfig()
+
+const siteTitle = computed(() => {
+  const title =
+    runtimeConfig.public?.siteTitle ?? FALLBACK_SITE_TITLE
+  return typeof title === 'string' && title.trim()
+    ? title
+    : FALLBACK_SITE_TITLE
+})
+
+const seoMeta = computed(() => {
+  const value = doc.value as null | {
+    title?: string | null
+    description?: string | null
+  }
+  return buildContentMeta(value ?? undefined, {
+    siteTitle: siteTitle.value,
+  })
+})
+
+const titleRef = computed(() => seoMeta.value.title)
+const descriptionRef = computed(() => seoMeta.value.description)
+
+useSeoMeta({
+  title: titleRef,
+  ogTitle: titleRef,
+  twitterTitle: titleRef,
+  description: descriptionRef,
+  ogDescription: descriptionRef,
+  twitterDescription: descriptionRef,
 })
 </script>
 
@@ -126,6 +223,55 @@ const introText = computed(() => {
       <div class="card content">
         <ContentRenderer :value="doc" />
       </div>
+
+      <nav
+        v-if="hasSurroundingLinks"
+        class="rounded-2xl border border-[color-mix(in_srgb,var(--border)_80%,transparent)] bg-[color-mix(in_srgb,var(--panel)_90%,transparent)] px-4 py-5 sm:px-6"
+        aria-label="前後のコンテンツ"
+      >
+        <div class="grid gap-4 sm:grid-cols-2">
+          <NuxtLink
+            v-if="nextLink"
+            :to="nextLink.path"
+            class="group flex flex-col gap-1 rounded-xl border border-transparent p-3 transition hover:border-[var(--accent)]/30 hover:bg-white/60"
+          >
+            <span
+              class="text-base font-semibold text-[color-mix(in_srgb,var(--text)_55%,transparent)]"
+            >
+              {{ surroundingLabels.next }}
+            </span>
+            <span class="text-base font-semibold text-[var(--text)]">
+              {{ nextLink.title }}
+            </span>
+            <span
+              v-if="formatSurroundingDate(nextLink)"
+              class="text-xs text-[var(--muted)]"
+            >
+              {{ formatSurroundingDate(nextLink) }}
+            </span>
+          </NuxtLink>
+          <NuxtLink
+            v-if="previousLink"
+            :to="previousLink.path"
+            class="group flex flex-col gap-1 rounded-xl border border-transparent p-3 text-right transition hover:border-[var(--accent)]/30 hover:bg-white/60"
+          >
+            <span
+              class="text-base font-semibold text-[color-mix(in_srgb,var(--text)_55%,transparent)]"
+            >
+              {{ surroundingLabels.prev }}
+            </span>
+            <span class="text-base font-semibold text-[var(--text)]">
+              {{ previousLink.title }}
+            </span>
+            <span
+              v-if="formatSurroundingDate(previousLink)"
+              class="text-xs text-[var(--muted)]"
+            >
+              {{ formatSurroundingDate(previousLink) }}
+            </span>
+          </NuxtLink>
+        </div>
+      </nav>
     </article>
 
     <p v-else class="muted text-center text-sm">

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { formatDate } from '~/utils/formatDate'
+import { formatDate, getYearInDefaultTimeZone } from '~/utils/formatDate'
 
 const toAbsolutePath = (path?: string | null) =>
   path ? (path.startsWith('/') ? path : `/${path}`) : '/'
 
 const { data } = await useAsyncData('articles-page', () =>
   queryCollection('article')
-    .select('path', 'title', 'date', 'summary', 'description', 'kind', 'tags')
+    .select('path', 'title', 'date', 'description', 'kind', 'tags')
     .order('date', 'DESC')
     .all(),
 )
@@ -30,14 +30,13 @@ const groupedArticles = computed(() => {
   const orderedKeys: string[] = []
 
   for (const item of articles.value) {
-    const hasDate = !!item.date
-    const yearKey = hasDate
-      ? String(new Date(item.date as string | number | Date).getFullYear())
-      : 'no-date'
+    const normalizedYear = getYearInDefaultTimeZone(item.date ?? undefined)
+    const hasYear = typeof normalizedYear === 'number'
+    const yearKey = hasYear ? String(normalizedYear) : 'no-date'
     if (!groups[yearKey]) {
       groups[yearKey] = {
         key: yearKey,
-        label: hasDate ? `${yearKey}` : 'Other',
+        label: hasYear ? `${normalizedYear}` : 'Other',
         items: [],
       }
       orderedKeys.push(yearKey)
@@ -46,36 +45,6 @@ const groupedArticles = computed(() => {
   }
 
   return orderedKeys.map((key) => groups[key])
-})
-
-const seasonalAccent = computed(() => {
-  const month = new Date().getMonth()
-  if (month >= 2 && month <= 4) {
-    return {
-      key: 'spring',
-      label: 'spring light',
-      src: '/images/accents/season-spring.jpg',
-    }
-  }
-  if (month >= 5 && month <= 7) {
-    return {
-      key: 'summer',
-      label: 'summer light',
-      src: '/images/accents/season-summer.jpg',
-    }
-  }
-  if (month >= 8 && month <= 10) {
-    return {
-      key: 'autumn',
-      label: 'autumn light',
-      src: '/images/accents/season-autumn.jpg',
-    }
-  }
-  return {
-    key: 'winter',
-    label: 'winter light',
-    src: '/images/accents/season-winter.jpg',
-  }
 })
 
 const formatMonthDay = (value?: string | Date) => {
