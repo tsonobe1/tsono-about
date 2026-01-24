@@ -4,10 +4,13 @@ import { formatDate } from '~/utils/formatDate'
 const toAbsolutePath = (path?: string | null) =>
   path ? (path.startsWith('/') ? path : `/${path}`) : '/'
 
+const TIMELINE_LIMIT = 5
+
 const { data: articlesData } = await useAsyncData('home-articles', () =>
   queryCollection('article')
-    .select('path', 'title', 'date', 'summary', 'description', 'kind', 'tags')
+    .select('path', 'title', 'date', 'description', 'kind', 'tags')
     .order('date', 'DESC')
+    .limit(TIMELINE_LIMIT)
     .all(),
 )
 
@@ -15,6 +18,7 @@ const { data: diaryData } = await useAsyncData('home-diary', () =>
   queryCollection('diary')
     .select('path', 'title', 'date', 'category', 'description')
     .order('date', 'DESC')
+    .limit(TIMELINE_LIMIT)
     .all(),
 )
 
@@ -23,7 +27,6 @@ type TimelinedEntry = {
   path?: string | null
   date?: string | Date | null
   title?: string | null
-  summary?: string | null
   description?: string | null
   kind?: string | null
   category?: string | null
@@ -33,12 +36,10 @@ const timeline = computed<TimelinedEntry[]>(() => {
   const articles = (articlesData.value ?? []).map((item) => ({
     ...item,
     type: 'article' as const,
-    summary: item.summary ?? item.description ?? '',
   }))
   const diaries = (diaryData.value ?? []).map((item) => ({
     ...item,
     type: 'diary' as const,
-    summary: item.description ?? '',
   }))
   return [...articles, ...diaries].sort((a, b) => {
     const dateA = a.date ? new Date(a.date).getTime() : 0
