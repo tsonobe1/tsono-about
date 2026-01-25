@@ -7,7 +7,9 @@ const SUPPORTED_HOSTS = ['youtube.com', 'youtu.be'] as const
 
 const isSupportedHost = (host: string) => {
   const normalized = host.replace(/^www\./, '')
-  return SUPPORTED_HOSTS.some((supported) => normalized.endsWith(supported))
+  return SUPPORTED_HOSTS.some(
+    (supported) => normalized === supported || normalized.endsWith(`.${supported}`)
+  )
 }
 
 export const buildYouTubeEmbedUrl = (input: string): string | null => {
@@ -38,7 +40,7 @@ export const parseYouTubeUrl = (input: string): ParsedYouTubeUrl | null => {
     let id = ''
     if (normalizedHost === 'youtu.be') {
       id = segments[0] ?? ''
-    } else if (normalizedHost.endsWith('youtube.com')) {
+    } else if (normalizedHost === 'youtube.com' || normalizedHost.endsWith('.youtube.com')) {
       if (segments[0] === 'watch') {
         id = params.get('v') ?? ''
         params.delete('v')
@@ -67,12 +69,17 @@ export const parseYouTubeUrl = (input: string): ParsedYouTubeUrl | null => {
 }
 
 export const parseStartTime = (value: string): number | undefined => {
-  if (/^\d+$/.test(value)) {
-    return Number(value)
+  const normalized = value.trim()
+  if (!normalized) {
+    return undefined
   }
 
-  const match = value.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/)
-  if (!match) {
+  if (/^\d+$/.test(normalized)) {
+    return Number(normalized)
+  }
+
+  const match = normalized.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/)
+  if (!match || (!match[1] && !match[2] && !match[3])) {
     return undefined
   }
 
