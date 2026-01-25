@@ -13,7 +13,9 @@ const shouldAnimate = useState('page-transition-enabled', () => true)
 <style>
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 250ms ease, transform 250ms ease;
+  transition:
+    opacity 250ms ease,
+    transform 250ms ease;
 }
 
 .page-enter-from,
