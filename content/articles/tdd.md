@@ -6,7 +6,7 @@ kind: 'essay'
 tags:
   - life
   - routine
-summary: '在宅でもスイッチを切り替えるための朝の習慣メモ。'
+description: '在宅でもスイッチを切り替えるための朝の習慣メモ。'
 ---
 
 マインドマップのアプリをTDDで作成しています。

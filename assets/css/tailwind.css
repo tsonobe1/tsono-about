@@ -280,6 +280,30 @@
       'Liberation Mono', monospace;
     font-size: 0.95em;
     background: transparent;
+    scrollbar-width: none;
+  }
+
+  .content pre:hover,
+  .content pre:focus-within {
+    scrollbar-width: thin;
+  }
+
+  .content pre::-webkit-scrollbar {
+    height: 0;
+  }
+
+  .content pre:hover::-webkit-scrollbar,
+  .content pre:focus-within::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .content pre::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .content pre::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--muted) 60%, transparent);
+    border-radius: 999px;
   }
 
   .content blockquote {

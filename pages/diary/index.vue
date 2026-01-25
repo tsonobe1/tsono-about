@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatDate } from '~/utils/formatDate'
+import { formatDate, getYearInDefaultTimeZone } from '~/utils/formatDate'
 
 const toAbsolutePath = (path?: string | null) =>
   path ? (path.startsWith('/') ? path : `/${path}`) : '/'
@@ -28,14 +28,13 @@ const groupedEntries = computed(() => {
   const orderedKeys: string[] = []
 
   for (const item of entries.value) {
-    const hasDate = !!item.date
-    const yearKey = hasDate
-      ? String(new Date(item.date as string | number | Date).getFullYear())
-      : 'no-date'
+    const normalizedYear = getYearInDefaultTimeZone(item.date ?? undefined)
+    const hasYear = typeof normalizedYear === 'number'
+    const yearKey = hasYear ? String(normalizedYear) : 'no-date'
     if (!groups[yearKey]) {
       groups[yearKey] = {
         key: yearKey,
-        label: hasDate ? `${yearKey}` : 'Other',
+        label: hasYear ? `${normalizedYear}` : 'Other',
         items: [],
       }
       orderedKeys.push(yearKey)

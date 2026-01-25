@@ -89,9 +89,9 @@ const onImageError = (event: Event) => {
 
       <div class="grid gap-6 sm:grid-cols-2">
         <component
+          :is="item.url ? 'a' : 'div'"
           v-for="item in displayItems"
           :key="item._id || item._path || item.title"
-          :is="item.url ? 'a' : 'div'"
           v-bind="
             item.url
               ? { href: item.url, target: '_blank', rel: 'noopener noreferrer' }
@@ -104,8 +104,8 @@ const onImageError = (event: Event) => {
               :src="item.cover"
               :alt="`${item.title} preview`"
               loading="lazy"
-              @error="onImageError"
               class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              @error="onImageError"
             />
             <div
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100"

@@ -7,7 +7,7 @@ tags:
   - nuxt
   - content
   - docs
-summary: '執筆から公開までのワークフローをステップごとに整理しました。'
+description: '執筆から公開までのワークフローをステップごとに整理しました。'
 ---
 
 1. `content/` に下書きを作る。タイトルと日付、概要を frontmatter に入れておく。

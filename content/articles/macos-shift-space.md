@@ -1,6 +1,6 @@
 ---
 title: 'macOSでshift + spaceを使って入力ソースを切りかえる'
-summary: 'macOSでショートカットに"shift + space"を割り当てる方法。'
+description: 'macOSでショートカットに"shift + space"を割り当てる方法。'
 kind: 'tech'
 date: 2025-07-02T00:00:00+09:00
 tags:

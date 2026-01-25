@@ -12,10 +12,14 @@ export default defineContentConfig({
         date: z.date(),
         kind: z.enum(['tech', 'craft', 'essay']),
         tags: z.array(z.string()).optional(),
-        summary: z.string().optional(),
+        description: z.string().optional(),
         updatedAt: z.date().optional(),
       }),
-      indexes: [{ columns: ['date'] }, { columns: ['kind'] }],
+      indexes: [
+        { columns: ['date'] },
+        { columns: ['kind'] },
+        { columns: ['path'] },
+      ],
     }),
 
     // 2. 日記
@@ -29,7 +33,7 @@ export default defineContentConfig({
         description: z.string().optional(),
         updatedAt: z.date().optional(),
       }),
-      indexes: [{ columns: ['date'] }],
+      indexes: [{ columns: ['date'] }, { columns: ['path'] }],
     }),
 
     // 3. 作品

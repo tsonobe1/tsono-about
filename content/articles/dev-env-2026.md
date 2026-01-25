@@ -4,7 +4,7 @@ date: '2026-01-18'
 kind: 'tech'
 tags:
   - environment
-summary: '2026年時点での開発環境メモ。'
+description: '2026年時点での開発環境メモ。'
 ---
 
 ## OS
@@ -15,8 +15,7 @@ Windows 環境で開発していたが、昨年 WSL に移行した。docker も
 使い慣れた Linuxコマンドも使えるし、エイリアスも使いまわせるしで快適に。
 ファイルシステムの都合か、動作も早い。
 
-ラズパイ は immich で家族写真を管理したり、ファイル共有のハブとして使用。
-[immich](https://immich.app)
+ラズパイ は [immich](raspi-immich-home-photos.md) で写真を管理したり、ファイル共有のハブとして使用。
 その他、プライベートにまつわる全ては M1 の MacBook Air で完結。後続の Apple シリコンも気になるが、M1 で快適に使えてしまっている。
 
 ## エディタ
@@ -57,6 +56,11 @@ iMac → Intel Mac → M1 という遍歴だが、毎回初期化して新規一
 ## ランチャー
 
 Raycast 。ランチャー兼クリップボード管理ツールとして使っている
+quicktimeのエクステンションも便利
+
+[Clipboard History for Mac](https://www.raycast.com/core-features/clipboard-history)  
+[QuickTime Recording](https://www.raycast.com/pradeepb28/quicktime)
+
 
 ## TODO管理
 
@@ -74,8 +78,8 @@ Emacs。 `clocktable` で 1日の終わりにその日の実行タスクを列�
 
 ## ノートテイキング
 
-Emacs の org-roam を使っている。
-[Org-roam](https://www.orgroam.com)
+Emacs の [Org-roam](https://www.orgroam.com) を使っている。
+
 いわゆる Zettelkasten[^zettelkasten] でメモが取れるプラグイン。2024年にエンジニアに転職した時から愛用。
 勉強やら仕事やらプライベートやらの全てをぶちこんでいる。
 
@@ -88,8 +92,7 @@ Syncthingを利用。前述のEmacsによるノート、タスクなどの諸々
 
 ## キーボード・マウス
 
-2020年6月4日に購入した Keychron K2 を愛用中。アルミフレームの茶軸です。
-[Keychron K2ワイヤレスメカニカルキーボード（バージョン2）（US ANSI 配列）](https://keychron.co.jp/products/keychron-k2-wireless-mechanical-keyboard?srsltid=AfmBOoof9j6ujHbCFJSEyFoaCraTkC9bViAujTojQ9qhnacrcTYElYeI)
+2020年6月4日に購入した [Keychron K2](https://keychron.co.jp/products/keychron-k2-wireless-mechanical-keyboard?srsltid=AfmBOoof9j6ujHbCFJSEyFoaCraTkC9bViAujTojQ9qhnacrcTYElYeI) を愛用中。アルミフレームの茶軸です。
 転職前は自前の Macbook に繋いでいたが、今はほぼ Windows 専属に。
 
 kinesis advantage 360 がほしい。
@@ -97,11 +100,9 @@ kinesis advantage 360 がほしい。
 
 ## モニター
 
-LG 27MP89HM-S をメインに使用。右側に BoYata のノートPCスタンドを置き、その上に Windows を置いている。
-[BoYata ノートパソコンスタンド](https://www.amazon.co.jp/dp/B07H774Q42?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_4)
-
-左側には モバイルディスプレイを縦置きしているので 3画面状態。
-[cocopar15.6インチ](https://www.amazon.co.jp/dp/B083RFYZGW?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_2&th=1)
+LG 27MP89HM-S をメインに使用。右側に [BoYata](https://www.amazon.co.jp/dp/B07H774Q42?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_4) のノートPCスタンドを置き、その上に Windows を置いている。  
+左側には モバイルディスプレイを縦置きしているので 3画面状態。  
+[cocopar15.6インチ](https://www.amazon.co.jp/dp/B083RFYZGW?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_2&th=1)   
 [KUUVAN タブレット スタンド](https://www.amazon.co.jp/dp/B0CMTQ51H2?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_2)
 
 [^zettelkasten]: ノートテイキングの手法の一つ。情報を小さな単位で分割し、それらを相互にリンクさせることで知識のネットワークを構築する方法論。[参考](https://dev.classmethod.jp/articles/intro-zettelkasten-and-emacs-org-roam/)
