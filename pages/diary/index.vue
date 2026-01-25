@@ -92,9 +92,7 @@ const formatMonthDay = (value?: string | Date) => {
                     class="text-[10px] tracking-[0.22em] text-[color-mix(in_srgb,var(--text)_55%,transparent)]"
                   >
                     <span>
-                      {{
-                        entry.date ? formatMonthDay(entry.date) : '--/--'
-                      }}
+                      {{ entry.date ? formatMonthDay(entry.date) : '--/--' }}
                     </span>
                   </div>
                   <h2

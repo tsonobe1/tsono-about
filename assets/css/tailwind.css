@@ -29,9 +29,12 @@
   .wood-band {
     border-top: 1px solid color-mix(in srgb, var(--wood-dark) 40%, transparent);
     border-bottom: 1px solid color-mix(in srgb, var(--wood) 40%, transparent);
-    background: linear-gradient(90deg, rgba(201, 165, 122, 0.08), rgba(201, 165, 122, 0));
+    background: linear-gradient(
+      90deg,
+      rgba(201, 165, 122, 0.08),
+      rgba(201, 165, 122, 0)
+    );
   }
-
 
   body {
     background: var(--bg);
@@ -105,7 +108,11 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 0%, rgba(214, 223, 217, 0.35), transparent 65%);
+    background: radial-gradient(
+      circle at 50% 0%,
+      rgba(214, 223, 217, 0.35),
+      transparent 65%
+    );
     opacity: 0.7;
     pointer-events: none;
   }
@@ -132,12 +139,12 @@
     box-shadow: 0 0 32px rgba(111, 186, 223, 0.3);
   }
 
- .content h1,
- .content h2,
- .content h3,
- .content h4,
- .content h5,
- .content h6 {
+  .content h1,
+  .content h2,
+  .content h3,
+  .content h4,
+  .content h5,
+  .content h6 {
     font-weight: 500;
     line-height: 1.35;
     scroll-margin-top: 96px;
@@ -264,8 +271,7 @@
     padding: 2px 6px;
     font-family:
       'Source Code Pro', 'IBM Plex Mono', 'SF Mono', 'ui-monospace',
-      'SFMono-Regular', 'Menlo', 'Consolas',
-      'Liberation Mono', monospace;
+      'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
   }
 
   .content pre {
@@ -276,8 +282,7 @@
     overflow-x: auto;
     font-family:
       'Source Code Pro', 'IBM Plex Mono', 'SF Mono', 'ui-monospace',
-      'SFMono-Regular', 'Menlo', 'Consolas',
-      'Liberation Mono', monospace;
+      'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
     font-size: 0.95em;
     background: transparent;
   }

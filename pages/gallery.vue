@@ -111,7 +111,9 @@ const onImageError = (event: Event) => {
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100"
             />
           </div>
-          <div class="space-y-2 border-t border-[color-mix(in_srgb,var(--border)_70%,transparent)] px-5 py-4">
+          <div
+            class="space-y-2 border-t border-[color-mix(in_srgb,var(--border)_70%,transparent)] px-5 py-4"
+          >
             <div class="flex items-center justify-between gap-2">
               <p class="text-xs uppercase tracking-wide text-[var(--accent)]">
                 {{ item.type }}
