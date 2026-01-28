@@ -8,14 +8,27 @@ import {
   watch,
 } from 'vue'
 
-const PRIMARY_LINKS = [
+type FeatureFlag = 'isGalleryPublic' | 'isAboutPublic'
+type NavLink = { key: string; label: string; to: string }
+type NavLinkConfig = NavLink & { featureFlag?: FeatureFlag }
+
+const NAV_LINK_CONFIGS: NavLinkConfig[] = [
   { key: 'articles', label: 'Article', to: '/articles' },
   { key: 'diary', label: 'Diary', to: '/diary' },
-  { key: 'gallery', label: 'Gallery', to: '/gallery' },
-] as const
+  { key: 'gallery', label: 'Gallery', to: '/gallery', featureFlag: 'isGalleryPublic' },
+  { key: 'about', label: 'About', to: '/about', featureFlag: 'isAboutPublic' },
+]
 
-const ISLAND_LINK = { key: 'about', label: 'About', to: '/about' } as const
-const NAV_LINKS = [...PRIMARY_LINKS, ISLAND_LINK] as const
+const runtimeConfig = useRuntimeConfig()
+
+const navLinks = computed<NavLink[]>(() =>
+  NAV_LINK_CONFIGS.filter((link) => {
+    if (!link.featureFlag) {
+      return true
+    }
+    return runtimeConfig.public[link.featureFlag]
+  }).map(({ featureFlag: _ignored, ...link }) => link),
+)
 
 const route = useRoute()
 const navContainerRef = ref<HTMLElement | null>(null)
@@ -34,7 +47,7 @@ const isActive = (to: string) => {
 }
 
 const activeKey = computed(
-  () => NAV_LINKS.find((link) => isActive(link.to))?.key ?? null,
+  () => navLinks.value.find((link) => isActive(link.to))?.key ?? null,
 )
 
 const resetIndicator = () => {
@@ -99,9 +112,16 @@ watch(activeKey, async (newKey) => {
   updateIndicator(newKey)
 })
 
-const handleLinkClick = (
-  item: (typeof PRIMARY_LINKS)[number] | typeof ISLAND_LINK,
-) => {
+watch(
+  navLinks,
+  async () => {
+    await nextTick()
+    updateIndicator(activeKey.value)
+  },
+  { deep: true },
+)
+
+const handleLinkClick = (item: NavLink) => {
   updateIndicator(item.key)
 }
 </script>
@@ -120,7 +140,7 @@ const handleLinkClick = (
         aria-hidden="true"
       />
       <div
-        v-for="item in NAV_LINKS"
+        v-for="item in navLinks"
         :key="item.key"
         :ref="(el) => setLinkRef(item.key, el)"
         class="flex"

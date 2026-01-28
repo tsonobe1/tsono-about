@@ -6,6 +6,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteTitle: FALLBACK_SITE_TITLE,
+      isAboutPublic: process.env.NUXT_PUBLIC_IS_ABOUT_PUBLIC === 'true',
+      isGalleryPublic: process.env.NUXT_PUBLIC_IS_GALLERY_PUBLIC === 'true',
     },
   },
   app: {

@@ -9,6 +9,12 @@ const TYPES = [
 
 type GalleryType = (typeof TYPES)[number]['key']
 
+const runtimeConfig = useRuntimeConfig()
+
+if (!runtimeConfig.public.isGalleryPublic) {
+  throw createError({ statusCode: 404, statusMessage: 'Not Found' })
+}
+
 const route = useRoute()
 const selected = computed<GalleryType>(() => {
   const q = route.query.type

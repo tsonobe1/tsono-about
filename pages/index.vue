@@ -1,87 +1,19 @@
-<script setup lang="ts">
-import { formatDate } from '~/utils/formatDate'
-
-const toAbsolutePath = (path?: string | null) =>
-  path ? (path.startsWith('/') ? path : `/${path}`) : '/'
-
-const TIMELINE_LIMIT = 5
-
-const { data: articlesData } = await useAsyncData('home-articles', () =>
-  queryCollection('article')
-    .select('path', 'title', 'date', 'description', 'kind', 'tags')
-    .order('date', 'DESC')
-    .limit(TIMELINE_LIMIT)
-    .all(),
-)
-
-const { data: diaryData } = await useAsyncData('home-diary', () =>
-  queryCollection('diary')
-    .select('path', 'title', 'date', 'category', 'description')
-    .order('date', 'DESC')
-    .limit(TIMELINE_LIMIT)
-    .all(),
-)
-
-type TimelinedEntry = {
-  type: 'article' | 'diary'
-  path?: string | null
-  date?: string | Date | null
-  title?: string | null
-  description?: string | null
-  kind?: string | null
-  category?: string | null
-}
-
-const timeline = computed<TimelinedEntry[]>(() => {
-  const articles = (articlesData.value ?? []).map((item) => ({
-    ...item,
-    type: 'article' as const,
-  }))
-  const diaries = (diaryData.value ?? []).map((item) => ({
-    ...item,
-    type: 'diary' as const,
-  }))
-  return [...articles, ...diaries].sort((a, b) => {
-    const dateA = a.date ? new Date(a.date).getTime() : 0
-    const dateB = b.date ? new Date(b.date).getTime() : 0
-    return dateB - dateA
-  })
-})
-
-const typeLabel = (entry: TimelinedEntry) =>
-  entry.type === 'article'
-    ? (entry.kind ?? 'article')
-    : (entry.category ?? 'diary')
-</script>
-
 <template>
-  <div class="mx-auto flex min-h-screen max-w-4xl flex-col gap-10 px-6 pb-16">
-    <div class="grid gap-6">
-      <NuxtLink
-        v-for="entry in timeline"
-        :key="entry.path"
-        :to="toAbsolutePath(entry.path)"
-        class="card transition"
-      >
-        <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-3 text-xs tracking-widest">
-            <span
-              class="rounded border border-[var(--border)] px-2 py-0.5 text-[var(--accent)]"
-            >
-              {{ typeLabel(entry) }}
-            </span>
-            <span class="muted">
-              {{ entry.date ? formatDate(entry.date) : '----/--/--' }}
-            </span>
-          </div>
-          <h2 class="text-xl font-semibold text-[var(--text)]">
-            {{ entry.title }}
-          </h2>
-        </div>
-      </NuxtLink>
-      <p v-if="!timeline.length" class="muted text-center text-sm">
-        まだ記事も日記もありません。
-      </p>
-    </div>
+  <div
+    class="flex min-h-screen w-full items-start justify-center bg-[var(--bg)] px-6 pt-16 pb-10"
+  >
+    <figure
+      class="relative w-full max-w-4xl overflow-hidden rounded-[2rem] border border-[color-mix(in_srgb,var(--border)_60%,transparent)] shadow-[0_25px_80px_-40px_rgba(0,0,0,0.75)]"
+    >
+      <NuxtImg
+        src="/images/articles/top/hero.webp"
+        alt="Sunrise view of Mt. Fuji behind a torii gate"
+        format="webp"
+        class="h-full w-full object-cover"
+        loading="eager"
+        decoding="async"
+      />
+      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/5" />
+    </figure>
   </div>
 </template>
