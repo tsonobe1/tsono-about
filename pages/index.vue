@@ -3,7 +3,7 @@
     class="flex min-h-screen w-full items-start justify-center bg-[var(--bg)] px-6 pt-16 pb-10"
   >
     <figure
-      class="relative w-full max-w-4xl overflow-hidden rounded-[2rem] border border-[color-mix(in_srgb,var(--border)_60%,transparent)] shadow-[0_25px_80px_-40px_rgba(0,0,0,0.75)]"
+      class="relative w-full max-w-4xl overflow-hidden rounded-[2rem]"
     >
       <NuxtImg
         src="/images/articles/top/hero.webp"
@@ -14,6 +14,11 @@
         decoding="async"
       />
       <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/5" />
+      <figcaption
+        class="pointer-events-none absolute bottom-4 right-5 rounded-full bg-black/55 px-4 py-1 text-xs tracking-[0.35em] text-white"
+      >
+        2025/11/21
+      </figcaption>
     </figure>
   </div>
 </template>

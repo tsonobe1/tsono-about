@@ -41,4 +41,9 @@ export default defineNuxtConfig({
   image: {
     dir: 'public',
   },
+  nitro: {
+    prerender: {
+      ignore: ['/about', '/gallery'],
+    },
+  },
 })

@@ -147,6 +147,10 @@ const formattedUpdatedAt = computed(() => {
 })
 
 const introText = computed(() => {
+  if (collectionKey.value === 'diary') {
+    // Diaryでは description を明示的に指定していない場合に本文の抜粋が表示されないようにする
+    return ''
+  }
   const value = doc.value as null | {
     description?: string | null
   }
@@ -231,29 +235,9 @@ useSeoMeta({
       >
         <div class="grid gap-4 sm:grid-cols-2">
           <NuxtLink
-            v-if="nextLink"
-            :to="nextLink.path"
-            class="group flex flex-col gap-1 rounded-xl border border-transparent p-3 transition hover:border-[var(--accent)]/30 hover:bg-white/60"
-          >
-            <span
-              class="text-base font-semibold text-[color-mix(in_srgb,var(--text)_55%,transparent)]"
-            >
-              {{ surroundingLabels.next }}
-            </span>
-            <span class="text-base font-semibold text-[var(--text)]">
-              {{ nextLink.title }}
-            </span>
-            <span
-              v-if="formatSurroundingDate(nextLink)"
-              class="text-xs text-[var(--muted)]"
-            >
-              {{ formatSurroundingDate(nextLink) }}
-            </span>
-          </NuxtLink>
-          <NuxtLink
             v-if="previousLink"
             :to="previousLink.path"
-            class="group flex flex-col gap-1 rounded-xl border border-transparent p-3 text-right transition hover:border-[var(--accent)]/30 hover:bg-white/60"
+            class="group flex flex-col gap-1 rounded-xl border border-transparent p-3 transition hover:border-[var(--accent)]/30 hover:bg-white/60"
           >
             <span
               class="text-base font-semibold text-[color-mix(in_srgb,var(--text)_55%,transparent)]"
@@ -268,6 +252,26 @@ useSeoMeta({
               class="text-xs text-[var(--muted)]"
             >
               {{ formatSurroundingDate(previousLink) }}
+            </span>
+          </NuxtLink>
+          <NuxtLink
+            v-if="nextLink"
+            :to="nextLink.path"
+            class="group flex flex-col gap-1 rounded-xl border border-transparent p-3 text-right transition hover:border-[var(--accent)]/30 hover:bg-white/60"
+          >
+            <span
+              class="text-base font-semibold text-[color-mix(in_srgb,var(--text)_55%,transparent)]"
+            >
+              {{ surroundingLabels.next }}
+            </span>
+            <span class="text-base font-semibold text-[var(--text)]">
+              {{ nextLink.title }}
+            </span>
+            <span
+              v-if="formatSurroundingDate(nextLink)"
+              class="text-xs text-[var(--muted)]"
+            >
+              {{ formatSurroundingDate(nextLink) }}
             </span>
           </NuxtLink>
         </div>

@@ -11,6 +11,7 @@ tags:
   - 'Chrome'
   - 'Safari'
   - 'Hugo'
+description: '結論よくわからないけど勉強になった話'
 ---
 
 ## 結論
