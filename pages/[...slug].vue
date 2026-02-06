@@ -7,14 +7,12 @@ import { buildContentMeta, FALLBACK_SITE_TITLE } from '~/utils/contentMeta'
 const route = useRoute()
 
 const currentPath = computed(() => {
-  const slug = route.params.slug
-  if (Array.isArray(slug)) {
-    return `/${slug.join('/')}`
-  }
-  if (typeof slug === 'string') {
-    return `/${slug}`
-  }
-  return '/'
+  const basePath = route.path || '/'
+  // Cloudflare Pagesでは /articles/foo にアクセスすると /articles/foo/ にリダイレクトされる。
+  // 末尾のスラッシュをそのまま使うと Content 側のパス（/articles/foo）と一致しないため、
+  // hydrate 後に再フェッチしたとき doc が null になる。ここで正規化して揃えておく。
+  const normalized = basePath.replace(/\/+$/, '') || '/'
+  return normalized.startsWith('/') ? normalized : `/${normalized}`
 })
 
 const collectionKey = computed<keyof Collections | null>(() => {
