@@ -2,7 +2,16 @@ import { defineNuxtConfig } from 'nuxt/config'
 import { FALLBACK_SITE_TITLE } from './utils/contentMeta'
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/content', '@nuxt/eslint', '@nuxt/image'],
+  modules: ['@nuxt/content', '@nuxt/eslint', '@nuxt/image', 'nuxt-studio'],
+  studio: {
+    route: '/_studio',
+    repository: {
+      provider: 'github',
+      owner: 'tsonobe1',
+      repo: 'tsono-about',
+      branch: 'main',
+    },
+  },
   runtimeConfig: {
     public: {
       siteTitle: FALLBACK_SITE_TITLE,
