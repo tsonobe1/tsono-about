@@ -7,6 +7,15 @@ pnpm install
 pnpm dev
 ```
 
+### LAN access (same Wi-Fi/LAN)
+
+```bash
+pnpm run dev:lan
+```
+
+- `http://<this-mac-ip>:3000` で同一LAN内の端末からアクセスできます。
+- Mac のIP確認例: `ifconfig | rg "inet "`
+
 ## Nuxt Studio
 
 - このプロジェクトは `nuxt-studio` を導入済みです。
