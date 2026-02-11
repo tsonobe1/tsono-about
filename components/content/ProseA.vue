@@ -93,7 +93,7 @@ function normalizeNodeText(node: VNodeChild): string {
   <a
     v-else-if="isExternal"
     :href="href"
-    class="font-semibold underline underline-offset-4 text-black decoration-black"
+    class="prose-link prose-link--external"
     :target="isExternal ? '_blank' : undefined"
     :rel="isExternal ? 'noopener noreferrer' : undefined"
   >
@@ -102,10 +102,38 @@ function normalizeNodeText(node: VNodeChild): string {
   <a
     v-else
     :href="href"
-    class="font-semibold underline underline-offset-4 decoration-dotted text-black decoration-black"
+    class="prose-link prose-link--internal"
     :target="isExternal ? '_blank' : undefined"
     :rel="isExternal ? 'noopener noreferrer' : undefined"
   >
     <slot />
   </a>
 </template>
+
+<style scoped>
+.prose-link {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1.2px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: color-mix(in srgb, var(--accent) 70%, transparent);
+  text-decoration-skip-ink: auto;
+  transition:
+    color 0.18s ease,
+    text-decoration-color 0.18s ease;
+}
+
+.prose-link:hover {
+  color: color-mix(in srgb, var(--accent) 80%, #0a1f5f 20%);
+  text-decoration-color: currentColor;
+}
+
+.prose-link--internal {
+  text-decoration-style: solid;
+}
+
+.prose-link--external {
+  text-decoration-style: solid;
+}
+</style>
