@@ -1,7 +1,7 @@
 ---
 title: Codex CLI が web_search 設定が非推奨と言っていくる
 date: 2026-02-10T00:00:00.000Z
-description: 2026/02/10時点でCodex CLIが
+description: Codex CLIでweb_search設定が非推奨になった警告への対処法
 kind: tech
 tags:
   - codex cli
@@ -24,7 +24,7 @@ tags:
 
 ![config.toml設定値一覧](/images/articles/duplicate-web-search/image.webp)
 
-`features.` や `tools.` が非推奨となっている。  
+`features.` や `tools.` が非推奨となっている。 :br
 最下部の `web_search` が最新。stringで `cached` or `live` を指定してねとのこと。
 
 ## 解決
