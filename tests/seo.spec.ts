@@ -3,18 +3,18 @@ import { buildPageSeoMeta, resolveOgImage, toAbsoluteUrl } from '../utils/seo'
 
 describe('URLを生成するSEOユーティリティ', () => {
   it('サイトURLと相対パスから絶対URLを生成する', () => {
-    const result = toAbsoluteUrl('/articles/sample', 'https://about.tsono.dev/')
-    expect(result).toBe('https://about.tsono.dev/articles/sample')
+    const result = toAbsoluteUrl('/articles/sample', 'https://about.tsono.org/')
+    expect(result).toBe('https://about.tsono.org/articles/sample')
   })
 
   it('先頭スラッシュなしのパスでも絶対URLを生成する', () => {
-    const result = toAbsoluteUrl('diary/entry', 'about.tsono.dev')
-    expect(result).toBe('https://about.tsono.dev/diary/entry')
+    const result = toAbsoluteUrl('diary/entry', 'about.tsono.org')
+    expect(result).toBe('https://about.tsono.org/diary/entry')
   })
 
   it('空パスのときはルートURLを返す', () => {
-    const result = toAbsoluteUrl('', 'https://about.tsono.dev')
-    expect(result).toBe('https://about.tsono.dev/')
+    const result = toAbsoluteUrl('', 'https://about.tsono.org')
+    expect(result).toBe('https://about.tsono.org/')
   })
 })
 
@@ -23,25 +23,25 @@ describe('OGP画像を解決する', () => {
     const result = resolveOgImage(
       '/images/articles/custom.webp',
       '/images/og/default.png',
-      'https://about.tsono.dev',
+      'https://about.tsono.org',
     )
-    expect(result).toBe('https://about.tsono.dev/images/articles/custom.webp')
+    expect(result).toBe('https://about.tsono.org/images/articles/custom.webp')
   })
 
   it('記事で画像指定がないときはfallback画像を使う', () => {
     const result = resolveOgImage(
       undefined,
       '/images/og/default.png',
-      'https://about.tsono.dev',
+      'https://about.tsono.org',
     )
-    expect(result).toBe('https://about.tsono.dev/images/og/default.png')
+    expect(result).toBe('https://about.tsono.org/images/og/default.png')
   })
 })
 
 describe('ページSEOメタを組み立てる', () => {
   it('画像ありページではsummary_large_imageを返す', () => {
     const result = buildPageSeoMeta({
-      siteUrl: 'https://about.tsono.dev',
+      siteUrl: 'https://about.tsono.org',
       path: '/articles/abc',
       title: 'タイトル',
       description: '説明',
@@ -49,9 +49,9 @@ describe('ページSEOメタを組み立てる', () => {
       ogType: 'article',
     })
 
-    expect(result.canonicalUrl).toBe('https://about.tsono.dev/articles/abc')
+    expect(result.canonicalUrl).toBe('https://about.tsono.org/articles/abc')
     expect(result.seoMeta.ogImage).toBe(
-      'https://about.tsono.dev/images/articles/abc.webp',
+      'https://about.tsono.org/images/articles/abc.webp',
     )
     expect(result.seoMeta.twitterCard).toBe('summary_large_image')
     expect(result.seoMeta.ogType).toBe('article')
@@ -59,7 +59,7 @@ describe('ページSEOメタを組み立てる', () => {
 
   it('fallback画像を空にした場合はsummaryになる', () => {
     const result = buildPageSeoMeta({
-      siteUrl: 'https://about.tsono.dev',
+      siteUrl: 'https://about.tsono.org',
       path: '/diary/abc',
       title: 'タイトル',
       description: '説明',

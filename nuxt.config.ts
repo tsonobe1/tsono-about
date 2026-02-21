@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteTitle: FALLBACK_SITE_TITLE,
-      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://about.tsono.dev',
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://about.tsono.org',
       isAboutPublic: process.env.NUXT_PUBLIC_IS_ABOUT_PUBLIC === 'true',
       isGalleryPublic: process.env.NUXT_PUBLIC_IS_GALLERY_PUBLIC === 'true',
     },

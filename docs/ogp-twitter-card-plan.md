@@ -8,7 +8,7 @@ X(Twitter) などでURL共有時に安定してカード表示されるよう、
 ## Public API / Interface 変更
 
 1. `runtimeConfig.public` に `siteUrl` を追加する。  
-   既定値: `https://about.tsono.dev`。環境変数: `NUXT_PUBLIC_SITE_URL`。
+   既定値: `https://about.tsono.org`。環境変数: `NUXT_PUBLIC_SITE_URL`。
 2. コンテンツスキーマに `ogImage?: string` を追加する。  
    対象: `article`, `diary` コレクション。
 3. 共通OGP画像を追加する。  
@@ -43,7 +43,7 @@ X(Twitter) などでURL共有時に安定してカード表示されるよう、
 
 ## Assumptions / Defaults
 
-1. 正式ドメインは `https://about.tsono.dev` を使用する。
+1. 正式ドメインは `https://about.tsono.org` を使用する。
 2. fallback画像は専用新規作成 `public/images/og/default.png` を使用する。
 3. `ogImage` は `article` と `diary` のみ対応し、他コレクションは共通画像で十分とする。
 4. locale は当面 `ja_JP` を前提にし、多言語対応は対象外。

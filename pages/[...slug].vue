@@ -175,7 +175,7 @@ const siteUrl = computed(() => {
   const value = runtimeConfig.public?.siteUrl
   return typeof value === 'string' && value.trim()
     ? value
-    : 'https://about.tsono.dev'
+    : 'https://about.tsono.org'
 })
 
 const contentMeta = computed(() => {

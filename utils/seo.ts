@@ -1,6 +1,6 @@
 import { FALLBACK_SITE_TITLE } from './contentMeta'
 
-export const DEFAULT_SITE_URL = 'https://about.tsono.dev'
+export const DEFAULT_SITE_URL = 'https://about.tsono.org'
 export const DEFAULT_OG_IMAGE_PATH = '/images/og/default.png'
 export const DEFAULT_OG_LOCALE = 'ja_JP'
 

@@ -28,4 +28,4 @@ updatedAt: '2026-01-14'
 
 - Twitter: `@tsono_dev`
 - GitHub: `github.com/tsonobe`
-- Blog: `https://about.tsono.dev`
+- Blog: `https://about.tsono.org`
