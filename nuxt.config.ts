@@ -15,6 +15,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteTitle: FALLBACK_SITE_TITLE,
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://about.tsono.dev',
       isAboutPublic: process.env.NUXT_PUBLIC_IS_ABOUT_PUBLIC === 'true',
       isGalleryPublic: process.env.NUXT_PUBLIC_IS_GALLERY_PUBLIC === 'true',
     },
@@ -27,6 +28,14 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content: `${FALLBACK_SITE_TITLE} の記事と日記をまとめています。`,
+        },
+        {
+          property: 'og:site_name',
+          content: FALLBACK_SITE_TITLE,
+        },
+        {
+          name: 'twitter:card',
+          content: 'summary_large_image',
         },
       ],
     },

@@ -13,6 +13,7 @@ export default defineContentConfig({
         kind: z.enum(['tech', 'craft', 'essay']),
         tags: z.array(z.string()).optional(),
         description: z.string().optional(),
+        ogImage: z.string().optional(),
         updatedAt: z.date().optional(),
       }),
       indexes: [
@@ -31,6 +32,7 @@ export default defineContentConfig({
         date: z.date(),
         category: z.enum(['movie', 'life', 'other']).optional(),
         description: z.string().optional(),
+        ogImage: z.string().optional(),
         updatedAt: z.date().optional(),
       }),
       indexes: [{ columns: ['date'] }, { columns: ['path'] }],

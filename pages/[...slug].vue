@@ -3,6 +3,7 @@ import type { Collections, ContentNavigationItem } from '@nuxt/content'
 import { setResponseStatus } from 'h3'
 import { formatDate } from '~/utils/formatDate'
 import { buildContentMeta, FALLBACK_SITE_TITLE } from '~/utils/contentMeta'
+import { buildPageSeoMeta, DEFAULT_OG_IMAGE_PATH } from '~/utils/seo'
 
 const route = useRoute()
 
@@ -28,8 +29,9 @@ const collectionKey = computed<keyof Collections | null>(() => {
   return null
 })
 
-const shouldSurround =
-  computed(() => collectionKey.value === 'article' || collectionKey.value === 'diary')
+const shouldSurround = computed(
+  () => collectionKey.value === 'article' || collectionKey.value === 'diary',
+)
 
 const contentDocKey = computed(
   () => `content-doc:${collectionKey.value ?? 'none'}:${currentPath.value}`,
@@ -79,8 +81,7 @@ const { data: surroundings } = await useAsyncData<
         after: 1,
         fields: ['date'],
       },
-    )
-      .order('date', 'DESC')
+    ).order('date', 'DESC')
     return items as (SurroundingItem | null)[]
   },
   { watch: [collectionKey, currentPath, shouldSurround] },
@@ -166,14 +167,18 @@ const introText = computed(() => {
 const runtimeConfig = useRuntimeConfig()
 
 const siteTitle = computed(() => {
-  const title =
-    runtimeConfig.public?.siteTitle ?? FALLBACK_SITE_TITLE
-  return typeof title === 'string' && title.trim()
-    ? title
-    : FALLBACK_SITE_TITLE
+  const title = runtimeConfig.public?.siteTitle ?? FALLBACK_SITE_TITLE
+  return typeof title === 'string' && title.trim() ? title : FALLBACK_SITE_TITLE
 })
 
-const seoMeta = computed(() => {
+const siteUrl = computed(() => {
+  const value = runtimeConfig.public?.siteUrl
+  return typeof value === 'string' && value.trim()
+    ? value
+    : 'https://about.tsono.dev'
+})
+
+const contentMeta = computed(() => {
   const value = doc.value as null | {
     title?: string | null
     description?: string | null
@@ -183,17 +188,49 @@ const seoMeta = computed(() => {
   })
 })
 
-const titleRef = computed(() => seoMeta.value.title)
-const descriptionRef = computed(() => seoMeta.value.description)
+const pageSeo = computed(() => {
+  const value = doc.value as null | {
+    ogImage?: string | null
+  }
+  return buildPageSeoMeta({
+    siteUrl: siteUrl.value,
+    path: currentPath.value,
+    title: contentMeta.value.title,
+    description: contentMeta.value.description,
+    ogImage: value?.ogImage,
+    fallbackImage: DEFAULT_OG_IMAGE_PATH,
+    ogType:
+      collectionKey.value === 'article' || collectionKey.value === 'diary'
+        ? 'article'
+        : 'website',
+    siteName: siteTitle.value,
+  })
+})
 
 useSeoMeta({
-  title: titleRef,
-  ogTitle: titleRef,
-  twitterTitle: titleRef,
-  description: descriptionRef,
-  ogDescription: descriptionRef,
-  twitterDescription: descriptionRef,
+  title: () => pageSeo.value.seoMeta.title,
+  description: () => pageSeo.value.seoMeta.description,
+  ogTitle: () => pageSeo.value.seoMeta.ogTitle,
+  ogDescription: () => pageSeo.value.seoMeta.ogDescription,
+  ogType: () => pageSeo.value.seoMeta.ogType,
+  ogUrl: () => pageSeo.value.seoMeta.ogUrl,
+  ogLocale: () => pageSeo.value.seoMeta.ogLocale,
+  ogSiteName: () => pageSeo.value.seoMeta.ogSiteName,
+  ogImage: () => pageSeo.value.seoMeta.ogImage,
+  twitterCard: () => pageSeo.value.seoMeta.twitterCard,
+  twitterTitle: () => pageSeo.value.seoMeta.twitterTitle,
+  twitterDescription: () => pageSeo.value.seoMeta.twitterDescription,
+  twitterImage: () => pageSeo.value.seoMeta.twitterImage,
 })
+
+useHead(() => ({
+  link: [
+    {
+      rel: 'canonical',
+      href: pageSeo.value.canonicalUrl,
+    },
+  ],
+}))
 </script>
 
 <template>

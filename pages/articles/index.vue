@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { formatDate, getYearInDefaultTimeZone } from '~/utils/formatDate'
+import { FALLBACK_SITE_TITLE } from '~/utils/contentMeta'
+import { buildPageSeoMeta, DEFAULT_OG_IMAGE_PATH } from '~/utils/seo'
 
 const toAbsolutePath = (path?: string | null) =>
   path ? (path.startsWith('/') ? path : `/${path}`) : '/'
@@ -51,6 +53,56 @@ const formatMonthDay = (value?: string | Date) => {
   const formatted = formatDate(value)
   return formatted ? formatted.slice(5) : ''
 }
+
+const runtimeConfig = useRuntimeConfig()
+
+const siteTitle = computed(() => {
+  const value = runtimeConfig.public?.siteTitle
+  return typeof value === 'string' && value.trim() ? value : FALLBACK_SITE_TITLE
+})
+
+const siteUrl = computed(() => {
+  const value = runtimeConfig.public?.siteUrl
+  return typeof value === 'string' && value.trim()
+    ? value
+    : 'https://about.tsono.dev'
+})
+
+const pageSeo = computed(() =>
+  buildPageSeoMeta({
+    siteUrl: siteUrl.value,
+    path: '/articles',
+    title: '記事一覧',
+    description: '技術や制作に関する記事一覧です。',
+    fallbackImage: DEFAULT_OG_IMAGE_PATH,
+    siteName: siteTitle.value,
+  }),
+)
+
+useSeoMeta({
+  title: () => pageSeo.value.seoMeta.title,
+  description: () => pageSeo.value.seoMeta.description,
+  ogTitle: () => pageSeo.value.seoMeta.ogTitle,
+  ogDescription: () => pageSeo.value.seoMeta.ogDescription,
+  ogType: () => pageSeo.value.seoMeta.ogType,
+  ogUrl: () => pageSeo.value.seoMeta.ogUrl,
+  ogLocale: () => pageSeo.value.seoMeta.ogLocale,
+  ogSiteName: () => pageSeo.value.seoMeta.ogSiteName,
+  ogImage: () => pageSeo.value.seoMeta.ogImage,
+  twitterCard: () => pageSeo.value.seoMeta.twitterCard,
+  twitterTitle: () => pageSeo.value.seoMeta.twitterTitle,
+  twitterDescription: () => pageSeo.value.seoMeta.twitterDescription,
+  twitterImage: () => pageSeo.value.seoMeta.twitterImage,
+})
+
+useHead(() => ({
+  link: [
+    {
+      rel: 'canonical',
+      href: pageSeo.value.canonicalUrl,
+    },
+  ],
+}))
 </script>
 
 <template>

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { FALLBACK_SITE_TITLE } from '~/utils/contentMeta'
+import { buildPageSeoMeta, DEFAULT_OG_IMAGE_PATH } from '~/utils/seo'
+
 const TYPES = [
   { key: 'app', label: 'App' },
   { key: 'music', label: 'Music' },
@@ -22,6 +25,54 @@ const selected = computed<GalleryType>(() => {
     ? (q as GalleryType)
     : 'app'
 })
+
+const siteTitle = computed(() => {
+  const value = runtimeConfig.public?.siteTitle
+  return typeof value === 'string' && value.trim() ? value : FALLBACK_SITE_TITLE
+})
+
+const siteUrl = computed(() => {
+  const value = runtimeConfig.public?.siteUrl
+  return typeof value === 'string' && value.trim()
+    ? value
+    : 'https://about.tsono.dev'
+})
+
+const pageSeo = computed(() =>
+  buildPageSeoMeta({
+    siteUrl: siteUrl.value,
+    path: '/gallery',
+    title: 'ギャラリー',
+    description: 'DIY / Music / App などの制作物をまとめています。',
+    fallbackImage: DEFAULT_OG_IMAGE_PATH,
+    siteName: siteTitle.value,
+  }),
+)
+
+useSeoMeta({
+  title: () => pageSeo.value.seoMeta.title,
+  description: () => pageSeo.value.seoMeta.description,
+  ogTitle: () => pageSeo.value.seoMeta.ogTitle,
+  ogDescription: () => pageSeo.value.seoMeta.ogDescription,
+  ogType: () => pageSeo.value.seoMeta.ogType,
+  ogUrl: () => pageSeo.value.seoMeta.ogUrl,
+  ogLocale: () => pageSeo.value.seoMeta.ogLocale,
+  ogSiteName: () => pageSeo.value.seoMeta.ogSiteName,
+  ogImage: () => pageSeo.value.seoMeta.ogImage,
+  twitterCard: () => pageSeo.value.seoMeta.twitterCard,
+  twitterTitle: () => pageSeo.value.seoMeta.twitterTitle,
+  twitterDescription: () => pageSeo.value.seoMeta.twitterDescription,
+  twitterImage: () => pageSeo.value.seoMeta.twitterImage,
+})
+
+useHead(() => ({
+  link: [
+    {
+      rel: 'canonical',
+      href: pageSeo.value.canonicalUrl,
+    },
+  ],
+}))
 
 const { data: items } = await useAsyncData('gallery', () =>
   queryCollection('gallery').all(),
@@ -117,7 +168,9 @@ const onImageError = (event: Event) => {
               class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100"
             />
           </div>
-          <div class="space-y-2 border-t border-[color-mix(in_srgb,var(--border)_70%,transparent)] px-5 py-4">
+          <div
+            class="space-y-2 border-t border-[color-mix(in_srgb,var(--border)_70%,transparent)] px-5 py-4"
+          >
             <div class="flex items-center justify-between gap-2">
               <p class="text-xs uppercase tracking-wide text-[var(--accent)]">
                 {{ item.type }}

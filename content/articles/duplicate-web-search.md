@@ -2,6 +2,7 @@
 title: Codex CLI が web_search 設定が非推奨と言っていくる
 date: 2026-02-10T00:00:00.000Z
 description: Codex CLIでweb_search設定が非推奨になった警告への対処法
+ogImage: /images/articles/duplicate-web-search/image.webp
 kind: tech
 tags:
   - codex cli
