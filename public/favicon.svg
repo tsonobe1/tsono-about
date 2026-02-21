@@ -1,0 +1,14 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 64 64"
+  role="img"
+  aria-labelledby="title"
+>
+  <title id="title">tsono favicon</title>
+  <rect width="64" height="64" rx="14" fill="#f3f0e9" />
+  <rect x="9" y="9" width="46" height="46" rx="10" fill="#b5413a" />
+  <path
+    d="M31.8 18.4c2.1 0 3.8 1.7 3.8 3.8v7.6h9.2c2.1 0 3.8 1.7 3.8 3.8s-1.7 3.8-3.8 3.8h-9.2v12.4c0 2.1-1.7 3.8-3.8 3.8S28 51.9 28 49.8V22.2c0-2.1 1.7-3.8 3.8-3.8z"
+    fill="#ffffff"
+  />
+</svg>

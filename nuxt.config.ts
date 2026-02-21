@@ -24,6 +24,23 @@ export default defineNuxtConfig({
     head: {
       title: FALLBACK_SITE_TITLE,
       titleTemplate: `%s | ${FALLBACK_SITE_TITLE}`,
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/favicon.svg',
+        },
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          href: '/favicon.ico',
+        },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/apple-touch-icon.png',
+        },
+      ],
       meta: [
         {
           name: 'description',

@@ -1,0 +1,85 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="1200"
+  height="630"
+  viewBox="0 0 1200 630"
+  role="img"
+  aria-labelledby="title desc"
+>
+  <title id="title">tsono default og image</title>
+  <desc id="desc">Washi inspired background with a red stamp and tsono wordmark.</desc>
+
+  <defs>
+    <linearGradient id="paperShade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7f4ee" />
+      <stop offset="100%" stop-color="#ece7dd" />
+    </linearGradient>
+    <filter id="softNoise" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence
+        type="fractalNoise"
+        baseFrequency="0.65"
+        numOctaves="2"
+        seed="11"
+        stitchTiles="stitch"
+      />
+      <feColorMatrix type="saturate" values="0" />
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.05" />
+      </feComponentTransfer>
+    </filter>
+    <filter id="stampShadow" x="-20%" y="-20%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#6f2a24" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="630" fill="url(#paperShade)" />
+  <rect x="0" y="0" width="1200" height="630" fill="#000000" filter="url(#softNoise)" />
+
+  <path
+    d="M90 90 L1110 90 L1110 540 L90 540"
+    fill="none"
+    stroke="#2b2a27"
+    stroke-width="2"
+    stroke-opacity="0.14"
+  />
+
+  <rect
+    x="220"
+    y="185"
+    width="180"
+    height="180"
+    rx="28"
+    fill="#b5413a"
+    filter="url(#stampShadow)"
+  />
+
+  <path
+    d="M299 232 C307 232 314 237 314 247 V264 H340 C349 264 356 271 356 280 C356 288 349 294 340 294 H314 V339 C314 348 307 355 299 355 C290 355 283 348 283 339 V247 C283 237 290 232 299 232 Z"
+    fill="#ffffff"
+    opacity="0.96"
+  />
+
+  <text
+    x="450"
+    y="313"
+    font-family="Noto Serif JP, Hiragino Mincho ProN, Yu Mincho, serif"
+    font-size="112"
+    font-weight="600"
+    letter-spacing="1.5"
+    fill="#2b2a27"
+  >
+    tsono
+  </text>
+
+  <text
+    x="454"
+    y="368"
+    font-family="Noto Serif JP, Hiragino Mincho ProN, Yu Mincho, serif"
+    font-size="26"
+    letter-spacing="6"
+    fill="#2b2a27"
+    fill-opacity="0.54"
+  >
+    NOTES · DIARY · CRAFT
+  </text>
+</svg>
