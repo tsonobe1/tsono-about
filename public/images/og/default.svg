@@ -35,14 +35,6 @@
   <rect x="0" y="0" width="1200" height="630" fill="url(#paperShade)" />
   <rect x="0" y="0" width="1200" height="630" fill="#000000" filter="url(#softNoise)" />
 
-  <path
-    d="M90 90 L1110 90 L1110 540 L90 540"
-    fill="none"
-    stroke="#2b2a27"
-    stroke-width="2"
-    stroke-opacity="0.14"
-  />
-
   <rect
     x="220"
     y="185"
@@ -71,15 +63,4 @@
     tsono
   </text>
 
-  <text
-    x="454"
-    y="368"
-    font-family="Noto Serif JP, Hiragino Mincho ProN, Yu Mincho, serif"
-    font-size="26"
-    letter-spacing="6"
-    fill="#2b2a27"
-    fill-opacity="0.54"
-  >
-    NOTES · DIARY · CRAFT
-  </text>
 </svg>
